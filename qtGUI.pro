@@ -4,6 +4,7 @@ SOURCES += \
     bucket.cpp \
     game1scene.cpp \
     main.cpp \
+    user.cpp \
     waterDroplet.cpp
 
 RESOURCES += \
@@ -12,4 +13,5 @@ RESOURCES += \
 HEADERS += \
     bucket.h \
     game1scene.h \
+    user.h \
     waterDroplet.h
