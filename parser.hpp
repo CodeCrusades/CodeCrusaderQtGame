@@ -1,4 +1,4 @@
-class pareser{
+class parser{
     
     //todo add profile picture
     void makeUserProfile(std::string userName, std::string fName, std::string lName, int bDay);
