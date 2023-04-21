@@ -1,6 +1,14 @@
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QObject>
+
 class parser{
+
+    QJsonArray *allUsers;
     
+    parser();
     //todo add profile picture
-    void makeUserProfile(std::string userName, std::string fName, std::string lName, int bDay);
-    void retrieveUserProfile(std::string userName, std::string password);
+    void makeUserProfile(QString userName, QString password, QString fName, QString lName, int bDay);
+    QJsonObject retrieveUserProfile(QString userName, QString password);
+    void updateUserProfile();
 };
