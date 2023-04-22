@@ -3,6 +3,7 @@
         <file>images/background.jpg</file>
         <file>images/bucket.png</file>
         <file>images/cloud.png</file>
+        <file>images/homeScreen.jpg</file>
         <file>images/water.gif</file>
     </qresource>
 </RCC>
