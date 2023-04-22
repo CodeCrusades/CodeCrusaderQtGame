@@ -8,6 +8,7 @@ SOURCES += \
     homescene.cpp \
     main.cpp \
     signinscene.cpp \
+    signupscene.cpp \
     user.cpp \
     waterDroplet.cpp
 
@@ -16,6 +17,7 @@ HEADERS += \
     game1scene.h \
     homescene.h \
     signinscene.h \
+    signupscene.h \
     user.h \
     waterDroplet.h
 

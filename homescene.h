@@ -3,17 +3,17 @@
 #include <QObject>
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
+#include <QPushButton>
+#include <QGraphicsProxyWidget>
 
 class homescene: public QGraphicsScene
 {
     Q_OBJECT
 
 private:
-    QGraphicsTextItem* signIn;
-    QGraphicsTextItem* signUp;
-    QGraphicsTextItem* guest;
 
 public:
+
     homescene();
 };
 
