@@ -22,7 +22,7 @@ int main(int argc, char **argv){
     main_view->setVerticalScrollBarPolicy((Qt::ScrollBarAlwaysOff));//to prevent scroll bars
 
     //show the view
-     qInfo("About to show the view.");
+    qInfo("About to show the view.");
     main_view->show();
 
     return app.exec();
