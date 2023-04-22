@@ -2,7 +2,7 @@
 #define USER_H
 #include <QWidget>
 
-class user
+class user : public QObject
 {
 //    Q_OBJECT
 public:
