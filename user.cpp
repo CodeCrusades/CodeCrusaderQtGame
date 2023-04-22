@@ -4,27 +4,28 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDateTime>
+#include <QString>
 
-user::user()
-{
-    birthDay = 0;
-    username = "";
-    profilePicture.load("/profilePictures/orange.png");
-    password = "";
-    firstName = "";
-    lastName = "";
+
+user::user( QString passwordIn, QString firstNameIn, QString lastNameIn,  QString usernameIn, int dateOfBirthIn){
+    password = passwordIn;
+    firstName = firstNameIn;
+    lastName = lastNameIn;
+    dateOfBirth = dateOfBirthIn;
+    username = usernameIn;
+    //profilePicture.load("/profilePictures/orange.png");
 }
 
 // possible arguments are the Username and Password.
 bool::user::login() {
 
     // create the Json object && open the Json file reading
-    QFile jsonFile;
-    jsonFile.setFileName("/tmp/settings.json"); // replace the path with the relative path of the json file
-    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text); // opens the file
+    QFile *jsonFile;
+    jsonFile->setFileName("/tmp/settings.json"); // replace the path with the relative path of the json file
+    jsonFile->open(QIODevice::ReadOnly | QIODevice::Text); // opens the file
 
     // verify that the json file is correctly opened
-    if(!jsonFile.isOpen()) {
+    if(!jsonFile->isOpen()) {
         qDebug() << "json file failed to open ";
         return false;
     } else {
@@ -32,8 +33,8 @@ bool::user::login() {
     }
 
 
-    QString stringFromJsonFile = jsonFile.readAll(); // read in all the JSON file. Q_TODO can it be optimatize to read in only the fields that I want. For example reading in the username and the password and the user name only?
-    jsonFile.close(); // close the file
+    QString stringFromJsonFile = jsonFile->readAll(); // read in all the JSON file. Q_TODO can it be optimatize to read in only the fields that I want. For example reading in the username and the password and the user name only?
+    jsonFile->close(); // close the file
 
     // get the actual JsonDocument
     QJsonDocument jsonResponse = QJsonDocument::fromJson(stringFromJsonFile.toUtf8());
@@ -98,7 +99,7 @@ bool::user::verifyPassword() {
 bool::user::signup(int birthDay, QString username, QString password, QString firstName, QString lastName, parser parser) {
     bool itWorked = true;
     //Simply initialize the user fields
-    this->birthDay = birthDay;
+    this->dateOfBirth = birthDay;
     this->firstName = firstName;
     this->lastName = lastName;
     this->username = username;
@@ -112,7 +113,8 @@ bool::user::signup(int birthDay, QString username, QString password, QString fir
     //then select which file needs to be attached to their profile with the profilePicture member variable.
     //Also, this portion should have a test section which makes sure the profile picture was uploaded successfully
     if (itWorked) {
-        parser.makeUserProfile(this->username, this->password, this->firstName, this->lastName, this->birthDay);
+        //TODO: Comment this back in once makeUserProfile method is created
+        //parser.makeUserProfile(this->username, this->password, this->firstName, this->lastName, this->dateOfBirth);
     }
     return itWorked;
 }
@@ -147,7 +149,7 @@ bool::user::validPassword(QString password) {
     }
     //If even one thing is false, return false
     else {
-        qDebug() << "Invalid password input, please put in"
+        qDebug() << "Invalid password input, please put in";
         return false;
     }
 }
