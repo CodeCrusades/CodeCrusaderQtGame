@@ -5,5 +5,16 @@
         <file>images/cloud.png</file>
         <file>images/homeScreen.jpg</file>
         <file>images/water.gif</file>
+        <file>profilePictures/ben.jpg</file>
+        <file>profilePictures/dave.jpg</file>
+        <file>profilePictures/deathstar.png</file>
+        <file>profilePictures/moustache.png</file>
+        <file>profilePictures/nabil.jpg</file>
+        <file>profilePictures/nightmare.gif</file>
+        <file>profilePictures/orange.png</file>
+        <file>profilePictures/trinity.png</file>
+        <file>profilePictures/unicorn.png</file>
+        <file>profilePictures/varun.jpg</file>
+        <file>sounds/029_Decline_09.wav</file>
     </qresource>
 </RCC>
