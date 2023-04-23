@@ -1,7 +1,6 @@
 QT +=widgets
 
 CONFIG += c++17
-
 SOURCES += \
     bucket.cpp \
     game1scene.cpp \
