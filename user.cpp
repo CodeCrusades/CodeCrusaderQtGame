@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDateTime>
+#include <QString>
 
 user::user()
 {
@@ -51,18 +52,26 @@ user::user(QString birthDay, QString username, QString password, QString firstNa
     this->lastName = lastName;
     this->highScore = highScore;
     this->lastThreeScores = lastThreeGames;
+
+user::user( QString passwordIn, QString firstNameIn, QString lastNameIn,  QString usernameIn, int dateOfBirthIn){
+    password = passwordIn;
+    firstName = firstNameIn;
+    lastName = lastNameIn;
+    dateOfBirth = dateOfBirthIn;
+    username = usernameIn;
+    //profilePicture.load("/profilePictures/orange.png");
 }
 
 // possible arguments are the Username and Password.
 bool::user::login() {
 
     // create the Json object && open the Json file reading
-    QFile jsonFile;
-    jsonFile.setFileName("/tmp/settings.json"); // replace the path with the relative path of the json file
-    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text); // opens the file
+    QFile *jsonFile;
+    jsonFile->setFileName("/tmp/settings.json"); // replace the path with the relative path of the json file
+    jsonFile->open(QIODevice::ReadOnly | QIODevice::Text); // opens the file
 
     // verify that the json file is correctly opened
-    if(!jsonFile.isOpen()) {
+    if(!jsonFile->isOpen()) {
         qDebug() << "json file failed to open ";
         return false;
     } else {
@@ -70,8 +79,8 @@ bool::user::login() {
     }
 
 
-    QString stringFromJsonFile = jsonFile.readAll(); // read in all the JSON file. Q_TODO can it be optimatize to read in only the fields that I want. For example reading in the username and the password and the user name only?
-    jsonFile.close(); // close the file
+    QString stringFromJsonFile = jsonFile->readAll(); // read in all the JSON file. Q_TODO can it be optimatize to read in only the fields that I want. For example reading in the username and the password and the user name only?
+    jsonFile->close(); // close the file
 
     // get the actual JsonDocument
     QJsonDocument jsonResponse = QJsonDocument::fromJson(stringFromJsonFile.toUtf8());
@@ -151,6 +160,31 @@ bool::user::verifyPassword() {
 //    }
 //    return itWorked;
 //}
+=======
+//Depending on the structure of the GUI, we will either need to pass arguments for each field read in from the widgets
+//OR, if the user is connected to the scene, then we could just read in the info from the widgets directly
+bool::user::signup(int birthDay, QString username, QString password, QString firstName, QString lastName, parser parser) {
+    bool itWorked = true;
+    //Simply initialize the user fields
+    this->dateOfBirth = birthDay;
+    this->firstName = firstName;
+    this->lastName = lastName;
+    this->username = username;
+    if (validPassword(password)) {
+        this->password = password;
+    }
+    else {
+        qDebug() << "Please input a valid password! Valid passwords contain at least 8 characters, at least one upper and lower case letter, and a number.";
+    }
+    //Here, we need some input from the GUI to display the profile picture options, and then select one. This will allow us to
+    //then select which file needs to be attached to their profile with the profilePicture member variable.
+    //Also, this portion should have a test section which makes sure the profile picture was uploaded successfully
+    if (itWorked) {
+        //TODO: Comment this back in once makeUserProfile method is created
+        //parser.makeUserProfile(this->username, this->password, this->firstName, this->lastName, this->dateOfBirth);
+    }
+    return itWorked;
+}
 
 bool::user::validPassword(QString password) {
     //Initialize booleans to keep track of password validity
@@ -182,6 +216,9 @@ bool::user::validPassword(QString password) {
     }
     //If even one thing is false, return false
     else {
+
+
+        qDebug() << "Invalid password input, please put in";
         return false;
     }
 }
