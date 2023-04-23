@@ -11,7 +11,7 @@ class waterDroplet : public QObject, public QGraphicsPixmapItem
     Q_OBJECT
 public:
     explicit waterDroplet(QObject *parent = nullptr);
-    //QGraphicsScene *scene;
+    int missedDropletCount;
 
 signals:
 
