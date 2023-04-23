@@ -6,6 +6,52 @@
 #include <QDateTime>
 #include <QString>
 
+user::user()
+{
+    birthDay = "";
+    username = "";
+    password = "";
+    firstName = "";
+    lastName = "";
+    highScore = 0;
+    for (int i = 0; i < 3; i++) {
+        lastThreeScores[i] = 0;
+    }
+}
+
+//Constructor to be used with input from signUp page
+user::user(QString birthDay, QString username, QString password, QString firstName, QString lastName) {
+    this->birthDay = birthDay;
+    this->username = username;
+    if (validPassword(password)) {
+        this->password = password;
+    }
+    else {
+        qDebug() << "Please input a valid password! Valid passwords contain at least 8 characters, at least one upper and lower case letter, and a number.";
+    }
+    this->firstName = firstName;
+    this->lastName = lastName;
+    highScore = 0;
+    for (int i = 0; i < 3; i++) {
+        lastThreeScores[i] = 0;
+    }
+}
+
+//Constructor to be used with input from the JSON file in conjunction with the signIn page
+//Side note: I don't think that the JSON file stores arrays, so it might be good to change this to handle that later?
+user::user(QString birthDay, QString username, QString password, QString firstName, QString lastName, int highScore, int *lastThreeGames) {
+    this->birthDay = birthDay;
+    this->username = username;
+    if (validPassword(password)) {
+        this->password = password;
+    }
+    else {
+        qDebug() << "Please input a valid password! Valid passwords contain at least 8 characters, at least one upper and lower case letter, and a number.";
+    }
+    this->firstName = firstName;
+    this->lastName = lastName;
+    this->highScore = highScore;
+    this->lastThreeScores = lastThreeGames;
 
 user::user( QString passwordIn, QString firstNameIn, QString lastNameIn,  QString usernameIn, int dateOfBirthIn){
     password = passwordIn;
@@ -94,6 +140,27 @@ bool::user::verifyPassword() {
     return false;
 }
 
+//I have commented this whole method out, since with the new structure, signing up will mostly just be creating a new
+//user object and storing it in the JSON file. But I'm leaving this here in case things get crazy haha.
+//bool::user::signup(int birthDay, QString username, QString password, QString firstName, QString lastName, parser parser) {
+//    bool itWorked = true;
+//    //Simply initialize the user fields
+//    this->birthDay = birthDay;
+//    this->firstName = firstName;
+//    this->lastName = lastName;
+//    this->username = username;
+//    if (validPassword(password)) {
+//        this->password = password;
+//    }
+//    else {
+//        qDebug() << "Please input a valid password! Valid passwords contain at least 8 characters, at least one upper and lower case letter, and a number.";
+//    }
+//    if (itWorked) {
+//        parser.makeUserProfile(this->username, this->password, this->firstName, this->lastName, this->birthDay);
+//    }
+//    return itWorked;
+//}
+=======
 //Depending on the structure of the GUI, we will either need to pass arguments for each field read in from the widgets
 //OR, if the user is connected to the scene, then we could just read in the info from the widgets directly
 bool::user::signup(int birthDay, QString username, QString password, QString firstName, QString lastName, parser parser) {
@@ -149,6 +216,8 @@ bool::user::validPassword(QString password) {
     }
     //If even one thing is false, return false
     else {
+
+
         qDebug() << "Invalid password input, please put in";
         return false;
     }
