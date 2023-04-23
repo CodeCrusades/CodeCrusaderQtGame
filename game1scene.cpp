@@ -3,6 +3,8 @@
 #include "waterDroplet.h"
 #include <QTimer>
 #include <QObject>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 
 //Contructor
@@ -26,6 +28,14 @@ game1scene::game1scene(){
     spawnDropletsTimer = new QTimer(this);
     connect(spawnDropletsTimer, &QTimer::timeout, this, &game1scene::generateDropletAndCount);
     spawnDropletsTimer->start(800);
+
+    //Add background music
+    QMediaPlayer *player = new QMediaPlayer();
+    QAudioOutput *output = new QAudioOutput();
+    player->setAudioOutput(output);
+    player->setSource(QUrl("qrc:/sounds/8Bit Platformer Loop.wav"));
+    output->setVolume(50);
+    player->play();
 
 //    if ( points >= 150){
 //        addText("You Won!!!");
