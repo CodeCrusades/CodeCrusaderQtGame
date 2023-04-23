@@ -3,7 +3,7 @@
 #include <QObject>
 
 class parser{
-
+public:
     QJsonArray *allUsers;
     
     parser();
