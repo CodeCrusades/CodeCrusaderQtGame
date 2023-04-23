@@ -5,7 +5,7 @@
 #include "homescene.h"
 #include "signinscene.h"
 #include "signupscene.h"
-#include
+#include <QMediaPlayer>
 
 
 int main(int argc, char **argv){

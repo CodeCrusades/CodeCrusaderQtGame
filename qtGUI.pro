@@ -1,4 +1,6 @@
-QT +=widgets
+QT += \
+    widgets \
+    multimedia \
 
 CONFIG += c++17
 
