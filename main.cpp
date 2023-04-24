@@ -6,7 +6,7 @@
 #include "signinscene.h"
 #include "signupscene.h"
 #include "welcomescene.h"
-
+#include "waterDroplet.h"
 
 int main(int argc, char **argv){
     QApplication app (argc,argv);
@@ -95,6 +95,9 @@ int main(int argc, char **argv){
     qInfo("About to show the view.");
     main_view->show();
 
+//    if (gameScene->points >= 150){
+//        gameScene->addText("You Won!!!");
+//    }
 
     return app.exec();
 }

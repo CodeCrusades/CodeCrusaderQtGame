@@ -7,19 +7,30 @@
 class user : public QObject{
 //    Q_OBJECT
 public:
+    QString birthDay;
     //int *birthDay;
     QString password;
+    QString username;
     QString firstName;
     QString lastName;
-    QString username;
-    int dateOfBirth;
-    QImage profilePicture;
+    int highScore;
+    int *lastThreeScores;
 
-    user(QString passwordIn, QString firstNameIn, QString lastNameIn,  QString usernameIn, int dateOfBirthIn);
+    user();
+    user(QString birthDay, QString username, QString password, QString firstName, QString lastName);
+    user(QString birthDay, QString username, QString password, QString firstName, QString lastName, int highScore, int *lastThreeGames);
     bool login();
     bool verifyPassword();
     bool hasBirthdayToday();
-    bool signup(int birthDay, QString username, QString password, QString firstName, QString lastName, parser parser);
+//    QString username;
+    int dateOfBirth;
+    QImage profilePicture;
+
+//    user(QString passwordIn, QString firstNameIn, QString lastNameIn,  QString usernameIn, int dateOfBirthIn);
+//    bool login();
+//    bool verifyPassword();
+//    bool hasBirthdayToday();
+//    bool signup(int birthDay, QString username, QString password, QString firstName, QString lastName, parser parser);
     bool validPassword(QString password);
     QDate getTodayDate();
 

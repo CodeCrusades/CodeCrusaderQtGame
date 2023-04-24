@@ -18,10 +18,12 @@ private:
 
 public:
     game1scene();
+    int waterDropletCounter;
+    int points;
+
 
 public slots:
-    void generateDroplet();
-
+    void generateDropletAndCount();
 };
 
 #endif // GAME1SCENE_H

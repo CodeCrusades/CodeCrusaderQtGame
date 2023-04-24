@@ -4,6 +4,8 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QObject>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 //Water droplet class
 class waterDroplet : public QObject, public QGraphicsPixmapItem
@@ -11,7 +13,9 @@ class waterDroplet : public QObject, public QGraphicsPixmapItem
     Q_OBJECT
 public:
     explicit waterDroplet(QObject *parent = nullptr);
-    //QGraphicsScene *scene;
+    int missedDropletCount;
+    QMediaPlayer *player;
+    QAudioOutput *output;
 
 signals:
 

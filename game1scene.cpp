@@ -3,11 +3,12 @@
 #include "waterDroplet.h"
 #include <QTimer>
 #include <QObject>
+#include <QMediaPlayer>
+#include <QAudioOutput>
+
 
 //Contructor
 game1scene::game1scene(){
-    qInfo("I'm in the game1scene constructor.");
-
     //add bucket
     bucketItem = new bucket();
     addItem(bucketItem);
@@ -20,21 +21,40 @@ game1scene::game1scene(){
     setBackgroundBrush(QBrush(QImage(":/images/background.jpg").scaledToHeight(512) .scaledToWidth(910)));
     setSceneRect(0,0,908,510);
 
+    waterDropletCounter = 0;
+    points = 0;
+
     //add multiple droplets to game scence
     spawnDropletsTimer = new QTimer(this);
-    connect(spawnDropletsTimer, &QTimer::timeout, this, &game1scene::generateDroplet);
+    connect(spawnDropletsTimer, &QTimer::timeout, this, &game1scene::generateDropletAndCount);
     spawnDropletsTimer->start(800);
+
+    //Add background music
+    QMediaPlayer *player = new QMediaPlayer();
+    QAudioOutput *output = new QAudioOutput();
+    player->setAudioOutput(output);
+    player->setSource(QUrl("qrc:/sounds/8Bit Platformer Loop.wav"));
+    output->setVolume(50);
+    player->play();
+
+//    if ( points >= 150){
+//        addText("You Won!!!");
+//    }
+
 }
 //Method to generate a water droplet
-void game1scene::generateDroplet(){
-     qInfo("I'm in generateDroplet method.");
+void game1scene::generateDropletAndCount(){
+    // qInfo("I'm in generateDroplet method.");
     waterDroplet *dropleeeet = new waterDroplet();
     this->addItem(dropleeeet);
     int random_number = arc4random() % 700;
     dropleeeet->setPos(random_number, 0);
     this->addItem(dropleeeet);
 
+    waterDropletCounter ++; //Keeping track of water droplets spawned
+    points = points + 5;//Keeping track of points
 }
+
 
 
 
