@@ -50,6 +50,7 @@ void game1scene::generateDropletAndCount(){
     int random_number = arc4random() % 700;
     dropleeeet->setPos(random_number, 0);
     this->addItem(dropleeeet);
+
     waterDropletCounter ++; //Keeping track of water droplets spawned
     points = points + 5;//Keeping track of points
 }

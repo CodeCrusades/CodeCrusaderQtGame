@@ -5,6 +5,7 @@
 #include "homescene.h"
 #include "signinscene.h"
 #include "signupscene.h"
+#include "welcomescene.h"
 #include "waterDroplet.h"
 
 int main(int argc, char **argv){
@@ -16,6 +17,7 @@ int main(int argc, char **argv){
     signInScene *signInPage = new signInScene();
     signUpScene *signUpPage = new signUpScene();
     game1scene *gameScene = new game1scene();
+    welcomeScene *welcomeScene1 = new welcomeScene();
 
     //create a view
     qInfo("About to create a view.");
@@ -83,7 +85,7 @@ int main(int argc, char **argv){
     });
 
     //add the scene to the view
-    main_view->setScene(mainScene);
+    main_view->setScene(welcomeScene1); // should be mainScene
 
     //main_view->setFixedSize(910, 512);
     //main_view->setHorizontalScrollBarPolicy((Qt::ScrollBarAlwaysOff));//to prevent scroll bars
