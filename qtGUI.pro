@@ -1,7 +1,8 @@
-QT +=widgets
+QT += \
+    widgets \
+    multimedia \
 
 CONFIG += c++17
-
 SOURCES += \
     bucket.cpp \
     game1scene.cpp \
@@ -12,6 +13,8 @@ SOURCES += \
     parser.cpp \
     user.cpp \
     waterDroplet.cpp \
+    welcomescene.cpp \
+
 
 HEADERS += \
     bucket.h \
@@ -22,6 +25,10 @@ HEADERS += \
     parser.hpp \
     user.h \
     waterDroplet.h \
+    welcomescene.h \
+
 
 RESOURCES += \
     prjct_resource.qrc \
+
+
