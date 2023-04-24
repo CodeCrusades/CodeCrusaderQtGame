@@ -5,6 +5,7 @@
         <file>images/cloud.png</file>
         <file>images/homeScreen.jpg</file>
         <file>images/water.gif</file>
+        <file>../Desktop/myGithubRepo/MSD/CS6015/Week13/Qt1P3/QtPt3/cloud_rain.png</file>
         <file>profilePictures/ben.jpg</file>
         <file>profilePictures/dave.jpg</file>
         <file>profilePictures/deathstar.png</file>
@@ -16,5 +17,7 @@
         <file>profilePictures/unicorn.png</file>
         <file>profilePictures/varun.jpg</file>
         <file>sounds/029_Decline_09.wav</file>
+        <file>sounds/8Bit Platformer Loop.wav</file>
+        <file>users.json</file>
     </qresource>
 </RCC>

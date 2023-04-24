@@ -10,8 +10,9 @@
 #include <QGraphicsProxyWidget>
 #include <QMenu>
 #include <QActionGroup>
-
-
+#include <QMediaPlayer>
+#include <QAudioOutput>
+#include <QMediaPlayer>
 
 //Contructor
 game1scene::game1scene() {
@@ -62,6 +63,15 @@ game1scene::game1scene() {
   QTimer *cloudTimer = new QTimer(this);
   connect (cloudTimer, &QTimer::timeout, this, &game1scene::moveTheCloud);
   cloudTimer->start(1000);
+
+  //Add background music
+  QMediaPlayer *player = new QMediaPlayer();
+  QAudioOutput *output = new QAudioOutput();
+  player->setAudioOutput(output);
+  player->setSource(QUrl("qrc:/sounds/8Bit Platformer Loop.wav"));
+  output->setVolume(50);
+  player->play();
+
 }
 
 
@@ -169,7 +179,7 @@ void game1scene::createLevelSelectionMenu() {
      connect(hardAction, &QAction::triggered, this, [this]() { setGameLevel(Hard); });
 }
 
-void game1scene::moveTheCloud() {
+void game1scene:: game1scene::moveTheCloud() {
      // Move the cloud horizontally
      int cloudSpeed = 40; // adjust this value to change the speed of the cloud
      if(cloud->x() >= 600) flagToMoveCloudHorizontal = false;

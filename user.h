@@ -15,7 +15,6 @@ public:
     QString lastName;
     int highScore;
     int *lastThreeScores;
-    int dateOfBirth;
 
     // constructors
     user();
@@ -27,10 +26,18 @@ public:
     //methods
     bool signIn(QString enteredUserName, QString password);
     bool verifyPassword();
+    bool hasBirthdayToday();
+    int dateOfBirth;
+
+//    user(QString passwordIn, QString firstNameIn, QString lastNameIn,  QString usernameIn, int dateOfBirthIn);
+//    bool login();
+//    bool verifyPassword();
+//    bool hasBirthdayToday();
+//    bool signup(int birthDay, QString username, QString password, QString firstName, QString lastName, parser parser);
+
     bool validPassword(QString password);
     bool hasBirthdayToday(QString userBirthdate);
     bool signup(int birthDay, QString username, QString password, QString firstName, QString lastName, parser parser);
-
     QDate getTodayDate();
     QImage profilePicture;
 
