@@ -14,6 +14,7 @@ class waterDroplet : public QObject, public QGraphicsPixmapItem
 public:
     explicit waterDroplet(QObject *parent = nullptr);
     int missedDropletCount;
+    bool missedFiveDroplet;
     QMediaPlayer *player;
     QAudioOutput *output;
 

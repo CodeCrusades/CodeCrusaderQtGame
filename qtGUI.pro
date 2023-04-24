@@ -13,7 +13,7 @@ SOURCES += \
     parser.cpp \
     user.cpp \
     waterDroplet.cpp \
-    welcomescene.cpp
+    welcomescene.cpp \
 
 
 HEADERS += \
@@ -25,8 +25,10 @@ HEADERS += \
     parser.hpp \
     user.h \
     waterDroplet.h \
-    welcomescene.h
+    welcomescene.h \
 
 
 RESOURCES += \
     prjct_resource.qrc \
+
+

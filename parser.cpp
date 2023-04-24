@@ -101,6 +101,8 @@ bool parser::userExists(QString userName, QString password) {
     return false;
 }
 
+
+
 //USED AT THE END OF EACH GAME TO UPDATE THE SCORES OF THE USER
 void parser::updateUserScores(QString userName, int score) {
     for (int i = 0; i < allUsers->size(); i++) {
