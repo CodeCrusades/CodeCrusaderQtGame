@@ -1,4 +1,5 @@
 #include "welcomescene.h"
+#include "game1scene.h"
 #include <QImage>
 #include <QFont>
 #include <QDate>

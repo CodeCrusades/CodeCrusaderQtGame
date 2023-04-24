@@ -1,6 +1,7 @@
 #include "signupscene.h"
 //#include "homescene.h"
 #include <QGraphicsView>
+#include "welcomescene.h"
 
 signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
 {

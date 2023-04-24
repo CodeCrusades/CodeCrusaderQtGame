@@ -7,8 +7,8 @@
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
 #include <QCalendarWidget>
-#include "welcomescene.h"
-//#include "homescene.h"
+
+class welcomeScene;
 
 class signUpScene: public QGraphicsScene
 {

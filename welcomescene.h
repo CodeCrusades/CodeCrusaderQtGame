@@ -10,7 +10,6 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
 #include <QDate>
-//#include "game1scene.h"
 
 class game1scene;
 

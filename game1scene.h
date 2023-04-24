@@ -3,9 +3,10 @@
 #define GAME1SCENE_H
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
-#include "bucket.h"
-#include "waterDroplet.h"
 #include <QObject>
+
+class waterDroplet;
+class bucket;
 
 //Game scene class
 class game1scene : public QGraphicsScene
