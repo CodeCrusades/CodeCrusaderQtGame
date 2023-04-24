@@ -6,12 +6,16 @@
 #include <QTextEdit>
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
+#include "welcomescene.h"
 
 class signInScene: public QGraphicsScene
 {
     Q_OBJECT
 
 private:
+    QGraphicsView* mainView;
+    welcomeScene *welcomeScene1;
+
     QGraphicsTextItem* username;
     QTextEdit* usernameEdit;
     QGraphicsProxyWidget* usernameWidget;
@@ -23,7 +27,13 @@ private:
     QGraphicsProxyWidget* loginWidget;
 
 public:
-    signInScene();
+    //signInScene();
+    signInScene(QGraphicsView* view);
+
+
+public slots:
+    void onLoginButtonClicked();
+
 };
 
 #endif // SIGNINSCENE_H
