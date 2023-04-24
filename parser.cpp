@@ -2,10 +2,33 @@
 #include "parser.hpp"
 
 parser::parser(){
-    //read Json objects from the Json file and construct the elements into Json Objects
-    //insert the objects into the Json array
-    //NEED TO MAKE FILE IN RESOURCES AND FIND RELATIVE PATH... NEED HELP NOT MESSING THAT UP
 
+    //initialize allUsers as an empty array
+    allUsers = new QJsonArray();
+
+    //open and read the file
+    QFile file(":/users.json");
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray data = file.readAll();
+    file.close();
+
+    //ensure the file reads into the temporary array correctly
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &error);
+    if (doc.isNull()) {
+        throw "parse error";
+    }
+    if (!doc.isArray()) {
+        throw "json doc not array";
+    }
+    QJsonArray docArray = doc.array();
+
+    //loop through allUsers and recreate users as JsonObjects in the array
+    for (const QJsonValue &v : docArray) {
+        if (v.isObject()) {
+            allUsers->append(v.toObject());
+        }
+    }
 }
 
 //USED TO MAKE A NEW USER AFTER USERNAMEAVAILABLE CHECK
@@ -23,7 +46,6 @@ void parser::makeUserProfile(QString userName, QString password, QString fName, 
     user->insert("3GamesAgo", 0);
 
     //append the new user to the array of users
-    allUsers = new QJsonArray;
     allUsers->append(QJsonValue(*user));
 
 }
@@ -112,7 +134,7 @@ void parser::storeIntoFile() {
 
     //generate the document and file
     QJsonDocument doc(*allUsers);
-    QFile file("userInfo.json");
+    QFile file(":/users.json");
 
     //write the Json user objects to the file
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
