@@ -5,5 +5,6 @@
         <file>images/cloud.png</file>
         <file>images/homeScreen.jpg</file>
         <file>images/water.gif</file>
+        <file>../Desktop/myGithubRepo/MSD/CS6015/Week13/Qt1P3/QtPt3/cloud_rain.png</file>
     </qresource>
 </RCC>

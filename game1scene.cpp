@@ -33,6 +33,7 @@ void game1scene::generateDroplet(){
     int random_number = arc4random() % 700;
     dropleeeet->setPos(random_number, 0);
     this->addItem(dropleeeet);
+
 }
 
 

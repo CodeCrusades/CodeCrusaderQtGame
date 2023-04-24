@@ -11,7 +11,8 @@ SOURCES += \
     signupscene.cpp \
     parser.cpp \
     user.cpp \
-    waterDroplet.cpp
+    waterDroplet.cpp \
+    welcomescene.cpp
 
 HEADERS += \
     bucket.h \
@@ -21,7 +22,8 @@ HEADERS += \
     signupscene.h \
     parser.hpp \
     user.h \
-    waterDroplet.h
+    waterDroplet.h \
+    welcomescene.h
 
 RESOURCES += \
     prjct_resource.qrc \
