@@ -72,9 +72,10 @@ game1scene::game1scene(int level)
 
 //Method to generate a water droplet
 void game1scene::generateDropletAndCount() {
-  if (*points >= 150) {
+  if (*points >= 15) {
       win = true;
       spawnDropletsTimer->stop();
+      removeItem(bucketItem);
   }
     if (*missedWaterDroplets >= 5) {
         missedFiveDroplet = true;
@@ -86,30 +87,49 @@ void game1scene::generateDropletAndCount() {
     int random_number = arc4random() % 700;
     dropleeeet->setPos(random_number, 80); // x is set to 80 to make sure that droplets are generated beneath the cloud
     this->addItem(dropleeeet);
+
+    if(missedFiveDroplet){
+        displayLoseMessage();
+    }
+    if(win) {
+        displayWinMessage();
+    }
 }
 
 bool game1scene::displayWinMessage() {
      QWidget *winWidget = new QWidget();
      winWidget->move(200, 200);
+     winWidget->setStyleSheet("background-color:blue");
      QVBoxLayout *layout = new QVBoxLayout;
      QLabel *label = new QLabel("Congratulations, you won!");
-     QPushButton *closeButton = new QPushButton("Close");
-     QPushButton *PlayAgain = new QPushButton("Play Again");
+     label->setStyleSheet("font-size: 40px; font-family: Arial;");
 
-     connect(closeButton, &QPushButton::clicked, winWidget, &QWidget::close);
+     QPushButton *closeButton = new QPushButton("Close");
      connect(closeButton, &QPushButton::clicked, winWidget, &QWidget::close);
 
      layout->addWidget(label);
      layout->addWidget(closeButton);
-     layout->addWidget(PlayAgain);
 
      winWidget->setLayout(layout);
      this->addWidget(winWidget);
-
      removeItem(bucketItem);
-//     removeItem(waterDropletItem);
 
-     // TODO figure out how to remove the water droplets from scene after winning. Since droplets are not part of gameScence constructor is bit trickier to remove them.
+     return true;
+}
+
+
+bool game1scene::displayLoseMessage() {
+     QWidget *loseWidget = new QWidget();
+     loseWidget->move(200, 200);
+     QVBoxLayout *layoutL = new QVBoxLayout;
+     QLabel *labelL = new QLabel("You lost!");
+     QPushButton *closeButtonL = new QPushButton("Close");
+     connect(closeButtonL, &QPushButton::clicked, loseWidget, &QWidget::close);
+     layoutL->addWidget(labelL);
+     layoutL->addWidget(closeButtonL);
+     loseWidget->setLayout(layoutL);
+     this->addWidget(loseWidget);
+     removeItem(bucketItem);
      return true;
 }
 
