@@ -86,6 +86,10 @@ void game1scene::generateDropletAndCount() {
     int random_number = arc4random() % 700;
     dropleeeet->setPos(random_number, 80); // x is set to 80 to make sure that droplets are generated beneath the cloud
     this->addItem(dropleeeet);
+
+    if(missedFiveDroplet){
+        displayLoseMessage();
+    }
 }
 
 bool game1scene::displayWinMessage() {
@@ -110,6 +114,22 @@ bool game1scene::displayWinMessage() {
 //     removeItem(waterDropletItem);
 
      // TODO figure out how to remove the water droplets from scene after winning. Since droplets are not part of gameScence constructor is bit trickier to remove them.
+     return true;
+}
+
+
+bool game1scene::displayLoseMessage() {
+     QWidget *loseWidget = new QWidget();
+     loseWidget->move(200, 200);
+     QVBoxLayout *layoutL = new QVBoxLayout;
+     QLabel *labelL = new QLabel("You lost!");
+     QPushButton *closeButtonL = new QPushButton("Close");
+     connect(closeButtonL, &QPushButton::clicked, loseWidget, &QWidget::close);
+     layoutL->addWidget(labelL);
+     layoutL->addWidget(closeButtonL);
+     loseWidget->setLayout(layoutL);
+     this->addWidget(loseWidget);
+     removeItem(bucketItem);
      return true;
 }
 
