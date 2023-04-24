@@ -27,14 +27,19 @@ public:
     bool signIn(QString enteredUserName, QString password);
     bool verifyPassword();
     bool hasBirthdayToday();
+    //QString username;
     int dateOfBirth;
 
+    user(QString passwordIn, QString firstNameIn, QString lastNameIn,  QString usernameIn, int dateOfBirthIn);
+    //bool login();
+    //bool verifyPassword();
+   // bool hasBirthdayToday();
+    bool signup(int birthDay, QString username, QString password, QString firstName, QString lastName, parser parser);
 //    user(QString passwordIn, QString firstNameIn, QString lastNameIn,  QString usernameIn, int dateOfBirthIn);
 //    bool login();
 //    bool verifyPassword();
 //    bool hasBirthdayToday();
 //    bool signup(int birthDay, QString username, QString password, QString firstName, QString lastName, parser parser);
-
     bool validPassword(QString password);
     bool hasBirthdayToday(QString userBirthdate);
     bool signup(int birthDay, QString username, QString password, QString firstName, QString lastName, parser parser);
