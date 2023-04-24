@@ -35,6 +35,7 @@ public slots:
     void generateDropletAndCount();
 //    void handleCollision();
     bool displayWinMessage();
+    bool displayLoseMessage();
     void setGameLevel(int level); // set the level of the game
     void moveTheCloud();
 };
