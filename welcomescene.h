@@ -9,8 +9,15 @@
 #include <QPushButton>
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
+#include <QDate>
 #include "game1scene.h"
 
+// game levels.
+typedef enum {
+    Easy,
+    Medium,
+    Hard
+}gameLevels;
 
 class welcomeScene: public QGraphicsScene
 {
@@ -50,7 +57,8 @@ public slots:
     void onEasyButtonClicked();
     void onMediumButtonClicked();
     void onHardButtonClicked();
-
+    bool hasBirthdayToday(QString userBirthdate);
+    QDate getTodayDate();
 };
 
 #endif // WELCOMESCENE_H

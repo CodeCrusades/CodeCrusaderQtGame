@@ -7,7 +7,7 @@
 #include <QGraphicsProxyWidget>
 #include <QGraphicsView>
 #include "signinscene.h"
-//#include "signupscene.h"
+#include "signupscene.h"
 #include "welcomescene.h"
 
 
@@ -16,7 +16,7 @@ class homescene: public QGraphicsScene
     Q_OBJECT
 
 private:
-    QGraphicsView* mainView;
+    QGraphicsView *mainView;
     welcomeScene *welcomeScene1;
     signInScene *signInPage;
     signUpScene *signUpPage;

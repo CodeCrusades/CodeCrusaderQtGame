@@ -1,5 +1,5 @@
 #include "signupscene.h"
-#include "homescene.h"
+//#include "homescene.h"
 #include <QGraphicsView>
 
 signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
@@ -136,18 +136,6 @@ signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
     addItem(newPassword);
     addItem(newPasswordWidget);
 
-    // go back button
-//    goBackButton = new QPushButton();
-//    goBackWidget = new QGraphicsProxyWidget();
-//    goBackWidget->setWidget(goBackButton);
-
-//    goBackButton->setText("Go back");
-//    goBackWidget->setPos(150, 425);
-//    goBackButton->setStyleSheet("background-color: grey;");
-//    goBackWidget->setAutoFillBackground(false);
-
-//    addItem(goBackWidget);
-
     // continue to finish signing up button
     moveForwardButton = new QPushButton();
     moveForwardWidget = new QGraphicsProxyWidget();
@@ -171,12 +159,47 @@ signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
 
     //button taking us to home page
 //    connect(goBackButton, &QPushButton::clicked, this, &signUpScene::onGoBackButtonClicked);
+
+    //spawning error message if a wrong password is entered
+    errorMessage = new QGraphicsTextItem();
+    addItem(errorMessage);
 }
 
 void signUpScene::onSignUpButtonClicked() {
+    //TODO: Add if statements under certain conditions
+    //Also, connect validPassword to this as well
+    //So: if validPassword -> if !userNameExists -> go forward, else, throw error message
     mainView->setScene(welcomeScene2);
 }
 
-//void signUpScene::onGoBackButtonClicked() {
-//    mainView->setScene(homeScene1);
-//}
+bool::signUpScene::validPassword(QString password) {
+    //Initialize booleans to keep track of password validity
+    bool hasNumber = false;
+    bool hasUpper = false;
+    bool hasLower = false;
+    bool correctSize = false;
+    //Check password length
+    if (password.length() >= 8) {
+        correctSize = true;
+    }
+    //Loop through the password to check if it contains appropriate values
+    for (int i = 0; i < password.length(); i++) {
+        if (password[i].isDigit()) {
+            hasNumber = true;
+        }
+        else if (password[i].isUpper()) {
+            hasUpper = true;
+        }
+        else if (password[i].isLower()) {
+            hasLower = true;
+        }
+    }
+    //If everything is true, then it is valid, return true
+    if (hasNumber && hasUpper && hasLower && correctSize) {
+        return true;
+    }
+    //If even one thing is false, return false, this will throw an error in the user constructor
+    else {
+        return false;
+    }
+}

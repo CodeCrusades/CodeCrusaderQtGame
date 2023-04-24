@@ -11,7 +11,6 @@ SOURCES += \
     signinscene.cpp \
     signupscene.cpp \
     parser.cpp \
-    user.cpp \
     waterDroplet.cpp \
     welcomescene.cpp \
 
@@ -23,7 +22,6 @@ HEADERS += \
     signinscene.h \
     signupscene.h \
     parser.hpp \
-    user.h \
     waterDroplet.h \
     welcomescene.h \
 

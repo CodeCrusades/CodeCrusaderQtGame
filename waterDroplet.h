@@ -12,11 +12,15 @@ class waterDroplet : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    explicit waterDroplet(QObject *parent = nullptr);
+    waterDroplet(int *points, int *collectedWaterDroplets, int *missedWaterDroplets);
     int missedDropletCount;
     bool missedFiveDroplet;
     QMediaPlayer *player;
     QAudioOutput *output;
+    QTimer *timer_drop;
+    int *points;
+    int *collectedWaterDroplets;
+    int *missedWaterDroplets;
 
 signals:
 

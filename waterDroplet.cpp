@@ -3,52 +3,35 @@
 #include <QTimer>
 #include<QGraphicsItem>
 
-
-//Constructor
-waterDroplet::waterDroplet(QObject *parent) : QObject{parent} {
-  // missed counter
+//Other Constructor lol
+waterDroplet::waterDroplet(int *points, int *collectedWaterDroplets, int *missedWaterDroplets) {
   missedFiveDroplet = false;
   this->setPixmap((QPixmap(":/images/water.gif")).scaled(30, 30));
-
-  QTimer *timer_drop = new QTimer(this);
+  timer_drop = new QTimer(this);
   connect(timer_drop, &QTimer::timeout, this, &waterDroplet::makeItRain);
   timer_drop->start(200);
-  missedDropletCount = 0;
-  missedDropletCount = 0;
   player = new QMediaPlayer();
   output = new QAudioOutput();
   player->setAudioOutput(output);
   player->setSource(QUrl("qrc:/sounds/029_Decline_09.wav"));
+  this->points = points;
+  this->collectedWaterDroplets = collectedWaterDroplets;
+  this->missedWaterDroplets = missedWaterDroplets;
 }
 
 //Method for producing many raindrops and deleting raindrops when they are out of the scene view or if they collide
 void waterDroplet::makeItRain(){
     this->setPos(this->x(), this->y() + 10);
-
-    if(missedDropletCount >=5 ){
-        scene()->addText("You loose!");
-    }
-    qInfo("Missed a droplet.");
     if(this->y() > 510){
-        missedDropletCount ++;//Increment the missed droplet counter
-        scene()->removeItem(this);
-        delete this;
+       scene()->removeItem(this);
+        *missedWaterDroplets += 1;
+       delete this;
+
     }else if(!collidingItems().isEmpty()){
-        missedDropletCount ++; //Increment the missed droplet counter
         player->play();
         scene()->removeItem(this);
+        *points = *points + 5;
+        *collectedWaterDroplets += 1;
         delete this;
-    }
+   }
 }
-
-
-////Method for producing many raindrops and deleting raindrops when they are out of the scene view or if they collide
-//void waterDroplet::makeItRain() {
-//     setPos(x(), y() + 10);
-//     if (this->y() > 510) {
-//       //         missedDropletCount++;
-//       scene()->removeItem(this);
-//       delete this;
-//     }
-//}
-

@@ -52,13 +52,17 @@ private:
     QCalendarWidget *calendar;
     QGraphicsProxyWidget* calendarWidget;
 
+    QGraphicsTextItem* errorMessage;
+
+
 public:
     //signUpScene();
-    signUpScene(QGraphicsView* view);
+    signUpScene(QGraphicsView* view); //Add user object parameter
 
 public slots:
     void onSignUpButtonClicked();
-//    void onGoBackButtonClicked();
+     bool validPassword(QString password);
+//    void onGoBackButtonClicked(); //Implement if we have time
 
 };
 

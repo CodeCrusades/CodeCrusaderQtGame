@@ -1,6 +1,7 @@
 #include "welcomescene.h"
 #include <QImage>
 #include <QFont>
+#include <QDate>
 
 welcomeScene::welcomeScene(QGraphicsView *view) : QGraphicsScene(), mainView(view) {
     //add background
@@ -143,9 +144,6 @@ welcomeScene::welcomeScene(QGraphicsView *view) : QGraphicsScene(), mainView(vie
 
     addItem(hardWidget);
 
-    //game scene
-    playGame = new game1scene();
-
     //button taking us to sign in page
     connect(easy, &QPushButton::clicked, this, &welcomeScene::onEasyButtonClicked);
 
@@ -158,12 +156,30 @@ welcomeScene::welcomeScene(QGraphicsView *view) : QGraphicsScene(), mainView(vie
 }
 
 void welcomeScene::onEasyButtonClicked(){
+    playGame = new game1scene(Easy);
     mainView->setScene(playGame);
 }
 void welcomeScene::onMediumButtonClicked(){
+    playGame = new game1scene(Medium);
     mainView->setScene(playGame);
 }
 void welcomeScene::onHardButtonClicked(){
+    playGame = new game1scene(Hard);
     mainView->setScene(playGame);
 }
+bool::welcomeScene::hasBirthdayToday(QString userBirthdateString) {
+    // find today's date
+    QDate date = getTodayDate(); // get the current day,month,year
+    QString todayDate = date.toString("MMdd");
 
+    if(todayDate == userBirthdateString) { // TODO verify that the userBirthdateString is in the format of MMdd (without the year plz)
+        qInfo("today is their birthday");
+        return true;// if it matches then happy birthday
+    }
+
+    return false;
+}
+QDate welcomeScene::getTodayDate() {
+    QDate date = QDateTime::currentDateTime().date();
+    return date;
+}

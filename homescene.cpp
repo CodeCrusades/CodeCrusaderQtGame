@@ -1,5 +1,4 @@
 #include "homescene.h"
-#include "signupscene.h"
 
 homescene::homescene(QGraphicsView *view) : QGraphicsScene(), mainView(view) {
     //add background

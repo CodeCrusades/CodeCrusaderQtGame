@@ -25,10 +25,10 @@ private:
 
     QPushButton* login;
     QGraphicsProxyWidget* loginWidget;
+    QGraphicsTextItem* errorMessage;
 
 public:
-    //signInScene();
-    signInScene(QGraphicsView* view);
+    signInScene(QGraphicsView* view); //Also add user object (or QJson if we go that way)
 
 
 public slots:
