@@ -52,8 +52,8 @@ user::user(QString birthDay, QString username, QString password, QString firstNa
     this->lastName = lastName;
     this->highScore = highScore;
     this->lastThreeScores = lastThreeGames;
-
-user::user( QString passwordIn, QString firstNameIn, QString lastNameIn,  QString usernameIn, int dateOfBirthIn){
+}
+user::user(QString passwordIn, QString firstNameIn, QString lastNameIn,  QString usernameIn, int dateOfBirthIn){
     password = passwordIn;
     firstName = firstNameIn;
     lastName = lastNameIn;
@@ -63,82 +63,101 @@ user::user( QString passwordIn, QString firstNameIn, QString lastNameIn,  QStrin
 }
 
 // possible arguments are the Username and Password.
-bool::user::login() {
+bool::user::signIn(QString enteredUserName, QString password) {
+    // get the enteredUserName and the password from the window
+
+    // create a parser object
+    parser *Parser = new parser();
+    if (Parser->userExists(enteredUserName,password)) {
+        QJsonObject userObject = Parser->retrieveUserProfile(enteredUserName, password);
+
+        // Retrive the user Birthday,
+        QString userBirthdateFromJsonFile = userObject.value("Birthday").toString();
+        // get their birthday and check if today is their birthday, if it is their birtday
+        if(hasBirthdayToday(userBirthdateFromJsonFile)){
+            // create the object of birthday and dispay it to the Welcoming scene
+        } else {
+            qInfo("Keep calm, today isn't your birthday");
+        }
+
+        // get therir last three scores from the Json object
+        QString lastScore1 = userObject.value("lastGame").toString();
+        QString lastScore2 = userObject.value("2GamesAgo").toString();
+        QString lastScore3 = userObject.value("3GamesAgo").toString();
+
+        // TODO send lastScore1, lastScore2, lastScore3 to the welcoming scene;
+
+
+
+
+        // switch to the Login page and display all functionality.
+
+    } else {
+        qInfo("User does not exist");
+    }
+
+
+
+
+    delete Parser;
+
+
+
 
     // create the Json object && open the Json file reading
-    QFile *jsonFile;
-    jsonFile->setFileName("/tmp/settings.json"); // replace the path with the relative path of the json file
-    jsonFile->open(QIODevice::ReadOnly | QIODevice::Text); // opens the file
-
-    // verify that the json file is correctly opened
-    if(!jsonFile->isOpen()) {
-        qDebug() << "json file failed to open ";
-        return false;
-    } else {
-        qDebug() << "json file has been successfully opened";
-    }
 
 
-    QString stringFromJsonFile = jsonFile->readAll(); // read in all the JSON file. Q_TODO can it be optimatize to read in only the fields that I want. For example reading in the username and the password and the user name only?
-    jsonFile->close(); // close the file
+//    QString stringFromJsonFile = jsonFile->readAll(); // read in all the JSON file. Q_TODO can it be optimatize to read in only the fields that I want. For example reading in the username and the password and the user name only?
+//    jsonFile->close(); // close the file
 
-    // get the actual JsonDocument
-    QJsonDocument jsonResponse = QJsonDocument::fromJson(stringFromJsonFile.toUtf8());
-
-    // get the username from the parser or front screen whatever  method it is provide.
-    QString enteredUserName  = "UserName"; // name entered from login screen // call the parser to get the username
-
-    // get the enteredUsername from the QLineEdit widget or whatever.
+//    // get the actual JsonDocument
+//    QJsonDocument jsonResponse = QJsonDocument::fromJson(stringFromJsonFile.toUtf8());
 
 
-    //QJsonArray jsonArray = jsonResponse.array();
-    QJsonObject jsonObject = jsonResponse.object();
+//    // get the enteredUsername from the QLineEdit widget or whatever.
 
-    QJsonArray allUsers = jsonObject["Users"].toArray(); // an array of all users.
 
-    // search for that enteredUserName from the jsonFile to retrieve other info of the user
-    for(auto user : allUsers) {
-        QJsonObject userObj = user.toObject();
-        QString userName = userObj.value("UserName").toString();
-        if(userName == enteredUserName) {
-            qDebug() << "user name has found in the JsonFile";
-            password = userObj.value("Password").toString();
-            firstName = userObj.value("FirstName").toString();
-            lastName = userObj.value("LastName").toString();
-            dateOfBirth = userObj.value("Birthday").toInt();
-            break;
-        }
-    }
+//    //QJsonArray jsonArray = jsonResponse.array();
+//    QJsonObject jsonObject = jsonResponse.object();
+
+//    QJsonArray allUsers = jsonObject["Users"].toArray(); // an array of all users.
+
+//    // search for that enteredUserName from the jsonFile to retrieve other info of the user
+//    for(auto user : allUsers) {
+//        QJsonObject userObj = user.toObject();
+//        QString userName = userObj.value("UserName").toString();
+//        if(userName == enteredUserName) {
+//            qDebug() << "user name has found in the JsonFile";
+//            password = userObj.value("Password").toString();
+//            firstName = userObj.value("FirstName").toString();
+//            lastName = userObj.value("LastName").toString();
+//            dateOfBirth = userObj.value("Birthday").toInt();
+//            break;
+//        }
+//    }
 
     // verify the password that is correct
-    if(!verifyPassword()) {
-        return false;
-    }
-
-    // get therir last three scores from the Json object
-
-    // get their birthday and check if today is their birthday, if it is their birtday
-
-    if(hasBirthdayToday()){
-        // create the object of birthday and dispay it to the scene
-    }
-
-    // switch to the Login page and display all functionality.
+//    if(!verifyPassword()) {
+//        return false;
+//    }
 
     return false;
 }
 
-bool::user::verifyPassword() {
-    QString enteredPassword = "msd250";
-    if(enteredPassword == password) {
-        return true;
-    }
 
-    //
-   qInfo("password is incorrect");
-    // don't call switch to the Welcome page
-    return false;
-}
+// TODO check with Micheal. Since the verification is being done in the parser. I dont't need to check it here as well. Can I be done tho. But it extra 0 work redutant
+//bool::user::verifyPassword() {
+//    QString enteredPassword = "msd250";
+//    if(enteredPassword == password) {
+//        return true;
+//    }
+
+//    //
+//   qInfo("password is incorrect");
+//    // don't call switch to the Welcome page
+//    return false;
+//}
+
 
 //I have commented this whole method out, since with the new structure, signing up will mostly just be creating a new
 //user object and storing it in the JSON file. But I'm leaving this here in case things get crazy haha.
@@ -160,9 +179,10 @@ bool::user::verifyPassword() {
 //    }
 //    return itWorked;
 //}
-=======
+
 //Depending on the structure of the GUI, we will either need to pass arguments for each field read in from the widgets
 //OR, if the user is connected to the scene, then we could just read in the info from the widgets directly
+
 bool::user::signup(int birthDay, QString username, QString password, QString firstName, QString lastName, parser parser) {
     bool itWorked = true;
     //Simply initialize the user fields
@@ -222,28 +242,31 @@ bool::user::validPassword(QString password) {
         return false;
     }
 }
-bool::user::hasBirthdayToday() {
 
+bool::user::hasBirthdayToday(QString userBirthdateString) {
     // find today's date
     QDate date = getTodayDate(); // get the current day,month,year
     QString todayDate = date.toString("MMdd");
 
-    // assuming the entered DOB is in the format of MMDDYEAR ex: 04212022
-    // extract the birthdate year, month, and day from the integer
-    int birthdateYear = dateOfBirth % 10000;
-    int birthdateMonth = (dateOfBirth / 10000) % 100;
-    int birthdateDay = dateOfBirth / 1000000;
-    //create a QDate object for the birthdate
-    QDate birthdate(birthdateYear, birthdateMonth, birthdateDay);
-
-    // convert the birthdate to a string in the format "MMdd"
-    QString userBirthdateString = birthdate.toString("MMdd");
-
-    // compare today's date and their birtday
-    if(todayDate == userBirthdateString) {
+    if(todayDate == userBirthdateString) { // TODO verify that the userBirthdateString is in the format of MMdd (without the year plz)
         qInfo("today is their birthday");
         return true;// if it matches then happy birthday
     }
+
+
+    // assuming the entered DOB is in the format of MMDDYEAR ex: 04212022
+    // extract the birthdate year, month, and day from the integer
+//    int birthdateYear = dateOfBirth % 10000;
+//    int birthdateMonth = (dateOfBirth / 10000) % 100;
+//    int birthdateDay = dateOfBirth / 1000000;
+//    //create a QDate object for the birthdate
+//    QDate birthdate(birthdateYear, birthdateMonth, birthdateDay);
+
+    // convert the birthdate to a string in the format "MMdd"
+   //userBirthdateString = birthdate.toString("MMdd");
+
+    // compare today's date and their birtday
+
 
     return false;
 }
@@ -254,6 +277,7 @@ QDate user::getTodayDate() {
     QDate date = QDateTime::currentDateTime().date();
     return date;
 }
+
 
 
 
