@@ -7,12 +7,18 @@
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
 #include <QCalendarWidget>
+#include "welcomescene.h"
+//#include "homescene.h"
 
 class signUpScene: public QGraphicsScene
 {
     Q_OBJECT
 
 private:
+    QGraphicsView* mainView;
+    welcomeScene *welcomeScene2;
+//    homescene *homeScene1;
+
     QGraphicsTextItem* newFirstName;
     QTextEdit* newFirstNameEdit;
     QGraphicsProxyWidget* newFirstNameWidget;
@@ -37,8 +43,8 @@ private:
     QTextEdit* newPasswordEdit;
     QGraphicsProxyWidget* newPasswordWidget;
 
-    QPushButton* goBackButton;
-    QGraphicsProxyWidget* goBackWidget;
+//    QPushButton* goBackButton;
+//    QGraphicsProxyWidget* goBackWidget;
 
     QPushButton* moveForwardButton;
     QGraphicsProxyWidget* moveForwardWidget;
@@ -47,7 +53,13 @@ private:
     QGraphicsProxyWidget* calendarWidget;
 
 public:
-    signUpScene();
+    //signUpScene();
+    signUpScene(QGraphicsView* view);
+
+public slots:
+    void onSignUpButtonClicked();
+//    void onGoBackButtonClicked();
+
 };
 
 #endif // SIGNUPSCENE_H

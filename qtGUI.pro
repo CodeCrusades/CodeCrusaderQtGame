@@ -25,7 +25,7 @@ HEADERS += \
     parser.hpp \
     user.h \
     waterDroplet.h \
-    welcomescene.h
+    welcomescene.h \
 
 
 RESOURCES += \
