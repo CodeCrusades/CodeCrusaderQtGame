@@ -3,6 +3,7 @@
 
 //Constructor
 bucket::bucket(QObject *parent) : QObject{parent}{
+    //Let's change the picture, because this one is ugly af
     setPixmap(QPixmap(":/images/bucket.png").scaled(300,300));
 }
 

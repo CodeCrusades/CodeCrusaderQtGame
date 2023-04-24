@@ -15,7 +15,11 @@
 #include <QMediaPlayer>
 
 //Contructor
-game1scene::game1scene() {
+game1scene::game1scene(int level)
+    : QGraphicsScene()
+{
+    this->level = level;
+   // allDrops = new QVector<waterDroplet*>();
   // add bucket
   bucketItem = new bucket();
   addItem(bucketItem);
@@ -25,6 +29,7 @@ game1scene::game1scene() {
   bucketItem->setPos(400, 365);
 
   // add background
+  //Change background to be a gif??????????
   setBackgroundBrush(QBrush(QImage(":/images/background.jpg").scaledToHeight(512) .scaledToWidth(910)));
   setSceneRect(0, 0, 908, 510);
 
@@ -33,30 +38,20 @@ game1scene::game1scene() {
   cloud->setPos(250, 0);
   addItem(cloud);
 
-  waterDropletCounter = 0;
-  points = 0;
-
-  missedDropletCount = 0;
+    //waterDropletCounter = 0;
+  points = new int(0);
+  collectedWaterDroplets = new int(0);
+  missedWaterDroplets = new int(0);
   missedFiveDroplet = false;
 
-  // based on how code is set up, we might not need this waterDropletItem in the gamescene constructor (droplets were created in the generateDropletAndCount()
-  waterDropletItem = new waterDroplet();
-  int random_number = arc4random() % 700;
-  waterDropletItem->setPos(random_number, 80);
-
-  addItem(waterDropletItem);
-
   win = false;
-
-  QTimer *timer = new QTimer(this);
-  connect(timer, &QTimer::timeout, this, &game1scene::handleCollision);
-  timer->start(100);
 
   // add multiple droplets to game scence
   spawnDropletsTimer = new QTimer(this);
   connect(spawnDropletsTimer, &QTimer::timeout, this, &game1scene::generateDropletAndCount);
   // Create the level selection menu
-  createLevelSelectionMenu();
+  setGameLevel(level);
+  //Figure out a way to stop drops from spawning, UPDATE: JUST USE THE ->STOP() METHOD OF THE TIMER LOL
 
   // slot to move the cloud
   flagToMoveCloudHorizontal = false;
@@ -77,41 +72,20 @@ game1scene::game1scene() {
 
 //Method to generate a water droplet
 void game1scene::generateDropletAndCount() {
-    if (missedDropletCount >= 5) {
+  if (*points >= 150) {
+      win = true;
+      spawnDropletsTimer->stop();
+  }
+    if (*missedWaterDroplets >= 5) {
         missedFiveDroplet = true;
+        spawnDropletsTimer->stop();
     }
+    qDebug() << "Points: " << *points << "\n" << "collectedWaterDroplets: " << *collectedWaterDroplets << "\n" << "missedWaterDroplets: " << *missedWaterDroplets << "\n";
+    waterDroplet *dropleeeet = new waterDroplet(points, collectedWaterDroplets, missedWaterDroplets);
 
-    waterDroplet *dropleeeet = new waterDroplet();
     int random_number = arc4random() % 700;
     dropleeeet->setPos(random_number, 80); // x is set to 80 to make sure that droplets are generated beneath the cloud
     this->addItem(dropleeeet);
-}
-
-// on drop collision remove the droplet from the scene and get extra points
-void game1scene::handleCollision() {
-
-    if (points >= 150) {
-        win = true;
-    }
-    qDebug() << "Points incremented to: " << points;
-    // check for collision of droplets with bucket
-    QList<QGraphicsItem *> collisions = collidingItems(bucketItem);
-    for (int i = 0; i < collisions.size(); i++) {
-        QGraphicsItem *item = collisions.at(i);
-
-        if (item->type() == waterDroplet::Type) { // if the item collided with a bucket is a type waterDroplet, increment the points and remove droplet from scence
-          waterDroplet *droplet = qgraphicsitem_cast<waterDroplet *>(item);
-          removeItem(droplet);
-          points = points + 5;
-          qDebug() << "Points incremented to: " << points; // add debug output
-          delete droplet;
-        }
-    }
-
-    // if points >= 150 display the winning message
-    if (win) {
-        displayWinMessage();
-    }
 }
 
 bool game1scene::displayWinMessage() {
@@ -140,43 +114,18 @@ bool game1scene::displayWinMessage() {
 }
 
 // method to select game level => we may adjust the timer accordingly
-void game1scene::setGameLevel(gameLevels level) {
+void game1scene::setGameLevel(int level) {
      switch (level) {
-     case Easy:
+     case 0:
       spawnDropletsTimer->start(1500);
       break;
-     case Medium:
+     case 1:
       spawnDropletsTimer->start(1000);
       break;
-     case Hard:
+     case 2:
       spawnDropletsTimer->start(500);
       break;
      }
-}
-
-//method to create the level menu. This method will be likely moved to Welcoming Scene and be adjusted accordingly. Notes to from Gloria to Reshma
-void game1scene::createLevelSelectionMenu() {
-     // Add a menu to select the level
-     QMenu *levelMenu = new QMenu;
-     QActionGroup *levelGroup = new QActionGroup(levelMenu);
-     QAction *easyAction = levelMenu->addAction("Easy");
-     easyAction->setCheckable(true);
-     easyAction->setActionGroup(levelGroup);
-     QAction *mediumAction = levelMenu->addAction("Medium");
-     mediumAction->setCheckable(true);
-     mediumAction->setActionGroup(levelGroup);
-     QAction *hardAction = levelMenu->addAction("Hard");
-     hardAction->setCheckable(true);
-     hardAction->setActionGroup(levelGroup);
-
-     // Set the default level to Easy
-     easyAction->setChecked(true);
-     setGameLevel(Easy);
-
-     // Connect the level actions to the setLevel() slot
-     connect(easyAction, &QAction::triggered, this, [this]() { setGameLevel(Easy); });
-     connect(mediumAction, &QAction::triggered, this, [this]() { setGameLevel(Medium); });
-     connect(hardAction, &QAction::triggered, this, [this]() { setGameLevel(Hard); });
 }
 
 void game1scene:: game1scene::moveTheCloud() {

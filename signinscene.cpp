@@ -67,8 +67,14 @@ signInScene::signInScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
     //button taking us to welcome page
     connect(login, &QPushButton::clicked, this, &signInScene::onLoginButtonClicked);
 
+    //spawning error message if a wrong password is entered
+    errorMessage = new QGraphicsTextItem();
+
+    errorMessage->setPlainText("Wrong password");
+
 }
 
 void signInScene::onLoginButtonClicked() {
+    //TODO: Add if statements under certain conditions
         mainView->setScene(welcomeScene1);
 }

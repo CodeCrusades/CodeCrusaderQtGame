@@ -67,25 +67,7 @@ QJsonObject parser::retrieveUserProfile(QString userName, QString password) {
     throw "error retrieving user information";
 }
 
-//USED TO CHECK IF A USERNAME IS AVAILABLE FOR A NEW USER
-bool parser::userNameAvailable(QString userName) {
-    for (int i = 0; i < allUsers->size(); i++) {
-
-        //iterate through the users
-        QJsonObject temp = allUsers->at(i).toObject();
-        if (temp.value("UserName") == userName) {
-
-            //if any users have that username, return false
-            return false;
-        }
-    }
-
-    //if no users have the username, return true
-    return true;
-}
-
-//USED AS A CHECK FOR SIGNING IN
-bool parser::userExists(QString userName, QString password) {
+bool parser::userPasswordMatches(QString userName, QString password) {
     for (int i = 0; i < allUsers->size(); i++) {
 
         //iterate through the users
@@ -101,7 +83,22 @@ bool parser::userExists(QString userName, QString password) {
     return false;
 }
 
+//USED AS A CHECK FOR SIGNING IN && SIGNING UP
+bool parser::userExists(QString userName) {
+    for (int i = 0; i < allUsers->size(); i++) {
 
+        //iterate through the users
+        QJsonObject temp = allUsers->at(i).toObject();
+        if (temp.value("UserName") == userName) {
+
+            //if any users are a match, return true
+            return true;
+        }
+    }
+
+    //if no users are a match, return false
+    return false;
+}
 
 //USED AT THE END OF EACH GAME TO UPDATE THE SCORES OF THE USER
 void parser::updateUserScores(QString userName, int score) {

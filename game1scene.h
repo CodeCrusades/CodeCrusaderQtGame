@@ -7,13 +7,6 @@
 #include "waterDroplet.h"
 #include <QObject>
 
-// game levels.
-typedef enum {
-    Easy,
-    Medium,
-    Hard
-}gameLevels;
-
 //Game scene class
 class game1scene : public QGraphicsScene
 {
@@ -27,19 +20,22 @@ private:
   bool missedFiveDroplet;
   bool flagToMoveCloudHorizontal;
   QGraphicsPixmapItem *cloud;
+  int level;
+  //QVector<waterDroplet*> *allDrops;
+
 public:
-    game1scene();
-    int waterDropletCounter;
-    int points;
-    int collectedWaterDroplets;
+    game1scene(int level);
+    //int waterDropletCounter;
+    int *points;
+    int *collectedWaterDroplets;
+    int *missedWaterDroplets;
 
 
 public slots:
     void generateDropletAndCount();
-    void handleCollision();
+//    void handleCollision();
     bool displayWinMessage();
-    void createLevelSelectionMenu();
-    void setGameLevel(gameLevels level); // set the level of the game
+    void setGameLevel(int level); // set the level of the game
     void moveTheCloud();
 };
 
