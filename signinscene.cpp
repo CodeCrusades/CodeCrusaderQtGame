@@ -1,7 +1,13 @@
 #include "signinscene.h"
+#include "welcomescene.h"
+#include <QGraphicsView>
 
-signInScene::signInScene()
-{
+signInScene::signInScene(QGraphicsView *view) : QGraphicsScene(), mainView(view) {
+    qInfo("Entered signInScene");
+
+    //welcome page
+    welcomeScene1 = new welcomeScene(mainView);
+
     //add background
     setBackgroundBrush(QBrush(QColor(220, 240, 255), Qt::SolidPattern));
     setSceneRect(0,0,908,510);
@@ -58,4 +64,11 @@ signInScene::signInScene()
 
     addItem(loginWidget);
 
+    //button taking us to welcome page
+    connect(login, &QPushButton::clicked, this, &signInScene::onLoginButtonClicked);
+
+}
+
+void signInScene::onLoginButtonClicked() {
+        mainView->setScene(welcomeScene1);
 }

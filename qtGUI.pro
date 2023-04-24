@@ -12,6 +12,7 @@ SOURCES += \
     signupscene.cpp \
     parser.cpp \
     user.cpp \
+    waterDroplet.cpp \
     welcomescene.cpp
 
 

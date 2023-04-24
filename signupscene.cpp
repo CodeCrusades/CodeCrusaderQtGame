@@ -1,10 +1,18 @@
 #include "signupscene.h"
+#include "homescene.h"
+#include <QGraphicsView>
 
-signUpScene::signUpScene()
+signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
 {
+
+    qInfo("Entered signUpScene");
+
     //add background
     setBackgroundBrush(QBrush(QColor(220, 240, 255), Qt::SolidPattern));
     setSceneRect(0,0,908,510);
+
+    //welcome page
+    welcomeScene2 = new welcomeScene(mainView);
 
     //common font
     QFont font("Times New Roman", 20);
@@ -129,16 +137,16 @@ signUpScene::signUpScene()
     addItem(newPasswordWidget);
 
     // go back button
-    goBackButton = new QPushButton();
-    goBackWidget = new QGraphicsProxyWidget();
-    goBackWidget->setWidget(goBackButton);
+//    goBackButton = new QPushButton();
+//    goBackWidget = new QGraphicsProxyWidget();
+//    goBackWidget->setWidget(goBackButton);
 
-    goBackButton->setText("Go back");
-    goBackWidget->setPos(150, 425);
-    goBackButton->setStyleSheet("background-color: grey;");
-    goBackWidget->setAutoFillBackground(false);
+//    goBackButton->setText("Go back");
+//    goBackWidget->setPos(150, 425);
+//    goBackButton->setStyleSheet("background-color: grey;");
+//    goBackWidget->setAutoFillBackground(false);
 
-    addItem(goBackWidget);
+//    addItem(goBackWidget);
 
     // continue to finish signing up button
     moveForwardButton = new QPushButton();
@@ -157,4 +165,18 @@ signUpScene::signUpScene()
     calendarWidget = new QGraphicsProxyWidget();
     //calendarWidget->setWidget(calendarWidget);
     addWidget(calendar);
+
+    //button taking us to welcome page
+    connect(moveForwardButton, &QPushButton::clicked, this, &signUpScene::onSignUpButtonClicked);
+
+    //button taking us to home page
+//    connect(goBackButton, &QPushButton::clicked, this, &signUpScene::onGoBackButtonClicked);
 }
+
+void signUpScene::onSignUpButtonClicked() {
+    mainView->setScene(welcomeScene2);
+}
+
+//void signUpScene::onGoBackButtonClicked() {
+//    mainView->setScene(homeScene1);
+//}
