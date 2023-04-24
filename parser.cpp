@@ -44,6 +44,7 @@ void parser::makeUserProfile(QString userName, QString password, QString fName, 
     user->insert("lastGame", 0);
     user->insert("2GamesAgo", 0);
     user->insert("3GamesAgo", 0);
+    user->insert("BestGame", 0);
 
     //append the new user to the array of users
     allUsers->append(QJsonValue(*user));
@@ -116,6 +117,12 @@ void parser::updateUserScores(QString userName, int score) {
             temp.insert("2GamesAgo", temp.value("lastGame"));
             temp.insert("lastGame", score);
 
+            //update best score
+            if (score > temp.value("BestGame").toInt()) {
+                temp.remove("BestGame");
+                temp.insert("BestGame", score);
+            }
+
             //remove the previous score values
             temp.remove("lastGame");
             temp.remove("2GamesAgo");
@@ -146,4 +153,3 @@ void parser::storeIntoFile() {
         throw "error writing to file";
     }
 }
-
