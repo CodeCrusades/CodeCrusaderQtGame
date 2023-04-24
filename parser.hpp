@@ -4,6 +4,7 @@
 #include <QErrorMessage>
 #include <QJsonDocument>
 #include <QFile>
+#include <QDebug>
 
 class parser{
 public:
