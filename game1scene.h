@@ -4,6 +4,7 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QObject>
+#include <QMediaPlayer>
 
 class waterDroplet;
 class bucket;

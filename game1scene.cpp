@@ -11,9 +11,7 @@
 #include <QGraphicsProxyWidget>
 #include <QMenu>
 #include <QActionGroup>
-#include <QMediaPlayer>
 #include <QAudioOutput>
-#include <QMediaPlayer>
 #include <QGraphicsItem>
 #include <QImage>
 #include <QFont>

@@ -5,9 +5,6 @@
 
 signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
 {
-
-    qInfo("Entered signUpScene");
-
     //Add background
     setBackgroundBrush(QBrush(QColor(220, 240, 255), Qt::SolidPattern));
     setSceneRect(0,0,908,510);

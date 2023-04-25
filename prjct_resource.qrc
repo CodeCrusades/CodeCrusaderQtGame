@@ -28,5 +28,6 @@
         <file>sounds/win.wav</file>
         <file>images/755t.gif</file>
         <file>images/Up8y.gif</file>
+        <file>images/MaleCharacterSpriteSheet.png</file>
     </qresource>
 </RCC>
