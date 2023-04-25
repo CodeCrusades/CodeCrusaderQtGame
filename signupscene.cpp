@@ -1,25 +1,51 @@
 #include "signupscene.h"
 //#include "homescene.h"
 #include <QGraphicsView>
+#include "QtWidgets/qboxlayout.h"
+#include "QtWidgets/qgroupbox.h"
 #include "welcomescene.h"
 #include "parser.hpp"
 #include <QLineEdit>
 
 signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsScene(), mainView(view)
 {
-
-    qInfo("Entered signUpScene");
-
     //Add background
     setBackgroundBrush(QBrush(QColor(220, 240, 255), Qt::SolidPattern));
     setSceneRect(0,0,908,510);
     this->parserObject = parserObject;
 
+    //Avatar selection
+    avatarSelection = 0;
+
     //Welcome page
-    welcomeScene2 = new welcomeScene(mainView, parserObject);
+    welcomeScene2 = new welcomeScene(mainView, parserObject, avatarSelection);
 
     //Common font
     QFont font("Times New Roman", 20);
+
+    //Add avatar selection
+    QGroupBox *avatar = new QGroupBox();
+    QHBoxLayout *avatarLayout = new QHBoxLayout();
+    avatar->setStyleSheet("background-color: rgb(220, 240, 255);");
+    avatar->move(300, 225);
+    QPushButton *image1 = new QPushButton();
+    image1->setIcon(QPixmap::fromImage(QImage(":/profilePictures/orange.png")));
+    image1->setIconSize(QSize(30, 30));
+    avatarLayout->addWidget(image1);
+    QPushButton *image2 = new QPushButton();
+    image2->setIcon(QPixmap::fromImage(QImage(":/profilePictures/correctdeathstar.png")));
+    image2->setIconSize(QSize(30, 30));
+    avatarLayout->addWidget(image2);
+    QPushButton *image3 = new QPushButton();
+    image3->setIcon(QPixmap::fromImage(QImage(":/profilePictures/unicorn.png")));
+    image3->setIconSize(QSize(30, 30));
+    avatarLayout->addWidget(image3);
+    QPushButton *image4 = new QPushButton();
+    image4->setIcon(QPixmap::fromImage(QImage(":/profilePictures/trinity.png")));
+    image4->setIconSize(QSize(30, 30));
+    avatarLayout->addWidget(image4);
+    avatar->setLayout(avatarLayout);
+    addWidget(avatar);
 
     //First name
     newFirstName = new QGraphicsTextItem();
@@ -68,7 +94,7 @@ signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
     newDOBWidget->setWidget(newDOBEdit);
 
     newDOB->setPlainText("DOB(MMDD): ");
-    newDOB->setPos(340, 200);
+    newDOB->setPos(265, 200);
     newDOB->setDefaultTextColor(Qt::black);
     newDOB->setFont(font);
 
@@ -80,25 +106,6 @@ signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
 
     addItem(newDOB);
     addItem(newDOBWidget);
-
-    //Profile pic
-    newProfilePic  = new QGraphicsTextItem();
-    newProfilePicChoose = new QPushButton();
-    newProfilePicWidget = new QGraphicsProxyWidget();
-    newProfilePicWidget->setWidget(newProfilePicChoose);
-
-    newProfilePic->setPlainText("Profile Picture: ");
-    newProfilePic->setPos(266, 250);
-    newProfilePic->setDefaultTextColor(Qt::black);
-    newProfilePic->setFont(font);
-
-    newProfilePicChoose->setText("Choose");
-    newProfilePicWidget->setPos(450, 250);
-    newProfilePicChoose->setStyleSheet("background-color: grey;");
-    newProfilePicWidget->setAutoFillBackground(false);
-
-    addItem(newProfilePic);
-    addItem(newProfilePicWidget);
 
     //Add text edit space for user to type in their username
     newUsername = new QGraphicsTextItem();
@@ -154,16 +161,14 @@ signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
 
     addItem(moveForwardWidget);
 
-    //calendar = new QCalendarWidget();
-    //calendarWidget = new QGraphicsProxyWidget();
-    //calendarWidget->setWidget(calendarWidget);
-    //addWidget(calendar);
+    //Check for avatarSelection
+    connect(image1, &QPushButton::clicked, this, &signUpScene::onImageOne);
+    connect(image2, &QPushButton::clicked, this, &signUpScene::onImageTwo);
+    connect(image3, &QPushButton::clicked, this, &signUpScene::onImageThree);
+    connect(image4, &QPushButton::clicked, this, &signUpScene::onImageFour);
 
     //button taking us to welcome page
     connect(moveForwardButton, &QPushButton::clicked, this, &signUpScene::onSignUpButtonClicked);
-
-    //button taking us to home page
-    //connect(goBackButton, &QPushButton::clicked, this, &signUpScene::onGoBackButtonClicked);
 
     //spawning error message if a wrong password is entered
     errorMessage = new QGraphicsTextItem();
@@ -171,13 +176,12 @@ signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
 }
 
 void signUpScene::onSignUpButtonClicked() {
-    //TODO: Add if statements under certain conditions
-    //Also, connect validPassword to this as well
-    //So: if validPassword -> if !userNameExists -> go forward, else, throw error message
-    if(!parserObject->userExists(newUsernameEdit->toPlainText())){
+    if(validPassword(newUsernameEdit->toPlainText()) && !parserObject->userExists(newUsernameEdit->toPlainText())){
         qDebug() << "Inside the onSignUpButtonClicked method";
         parserObject->makeUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->text(), newFirstNameEdit->toPlainText(), newLastNameEdit->toPlainText(), newDOBEdit->toPlainText());
         parserObject->storeIntoFile(); //writes to JSON file
+        parserObject->retrieveUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->toPlainText());
+        welcomeScene2 = new welcomeScene(mainView, parserObject, avatarSelection);
         parserObject->retrieveUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->text());
         welcomeScene2 = new welcomeScene(mainView, parserObject);
         mainView->setScene(welcomeScene2);

@@ -54,7 +54,8 @@ private:
 public:
     //welcomeScene();
     parser *parserObject;
-    welcomeScene(QGraphicsView* view, parser *parserObject);
+    int avatarSelection;
+    welcomeScene(QGraphicsView* view, parser *parserObject, int avatarSelection);
 
 public slots:
     void onEasyButtonClicked();
