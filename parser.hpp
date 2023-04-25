@@ -15,7 +15,7 @@ public:
     QJsonObject user;
     parser();
     void makeUserProfile(QString userName, QString password, QString fName, QString lName, QString bDay);
-    void retrieveUserProfile(QString userName, QString password);
+    QJsonObject retrieveUserProfile(QString userName, QString password);
     void updateUserScores(QString userName, int score);
     bool userExists(QString userName);
     void storeIntoFile();

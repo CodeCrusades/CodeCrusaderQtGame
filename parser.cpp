@@ -60,28 +60,41 @@ void parser::makeUserProfile(QString userName, QString password, QString fName, 
 }
 
 //USED TO RETRIEVE ALL ELEMENTS OF A USER WHEN SIGNING IN AFTER USEREXISTS CHECK
-void parser::retrieveUserProfile(QString userName, QString password) {
+QJsonObject parser::retrieveUserProfile(QString userName, QString password) {
 
+    QJsonObject temp;
     //Iterate throught the JSonArray, looking for the userName and password
     for (int i = 0; i < allUsers->size(); i++) {
-        QJsonObject temp = allUsers->at(i).toObject();
-        if (temp.value("UserName") == userName && temp.value("Password") == password) {
+        temp = allUsers->at(i).toObject();
+//        qDebug() << temp.value("FirstName");
+//        qDebug() << userName << " " << password;
 
+        if (temp.value("UserName") == userName && temp.value("Password") == password) {
             //When the user is found, return it as a JsonObject
             //allUsers->at(i).toObject();
-            QJsonObject tmp;
-            tmp.insert("UserName", userName);
-            tmp.insert("Password", password);
-            tmp.insert("FirstName", temp.value("FirstName").toString());
-            tmp.insert("LastName", temp.value("LirstName").toString());
-            tmp.insert("Birthday", temp.value("Birthday").toString());
-            tmp.insert("lastGame", 0);
-            tmp.insert("2GamesAgo", 0);
-            tmp.insert("3GamesAgo", 0);
-            tmp.insert("BestGame", 0);
-            user = tmp;
-        }
+//            QJsonObject tmp = temp;
+//            qDebug() << "Inside loop";
+//            tmp.insert("UserName", userName);
+//            tmp.insert("Password", password);
+//            tmp.insert("FirstName", temp.value("FirstName").toString());
+//            tmp.insert("LastName", temp.value("LirstName").toString());
+//            tmp.insert("Birthday", temp.value("Birthday").toString());
+//            tmp.insert("lastGame", 0);
+//            tmp.insert("2GamesAgo", 0);
+//            tmp.insert("3GamesAgo", 0);
+//            tmp.insert("BestGame", 0);
+            return temp;
+
+//            qDebug() << "\t TEST: " << user.value("FirstName");
+
+
+       }
+
+
+
     }
+
+    return temp;
 
     //If the user does not exist at this point, qDebug() << an exception
     qDebug() << "error retrieving user information";

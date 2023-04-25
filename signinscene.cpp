@@ -123,8 +123,8 @@ void signInScene::onLoginButtonClicked() {
         parserObject->retrieveUserProfile(usernameEdit->toPlainText(), passwordEdit->toPlainText());
         welcomeScene1 = new welcomeScene(mainView, parserObject, avatarSelection);
     if(parserObject->userExists(usernameEdit->toPlainText()) && parserObject->userPasswordMatches(usernameEdit->toPlainText(), passwordEdit->text())){
-        parserObject->retrieveUserProfile(usernameEdit->toPlainText(), passwordEdit->text());
-        welcomeScene1 = new welcomeScene(mainView, parserObject);
+        parserObject->user = parserObject->retrieveUserProfile(usernameEdit->toPlainText(), passwordEdit->text());
+        welcomeScene1 = new welcomeScene(mainView, parserObject->user);
         mainView->setScene(welcomeScene1);
     }
     else{

@@ -18,7 +18,7 @@ signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
     avatarSelection = 0;
 
     //Welcome page
-    welcomeScene2 = new welcomeScene(mainView, parserObject, avatarSelection);
+    welcomeScene2 = new welcomeScene(mainView, parserObject->user, avatarSelection);
 
     //Common font
     QFont font("Times New Roman", 20);
@@ -183,7 +183,7 @@ void signUpScene::onSignUpButtonClicked() {
         parserObject->retrieveUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->toPlainText());
         welcomeScene2 = new welcomeScene(mainView, parserObject, avatarSelection);
         parserObject->retrieveUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->text());
-        welcomeScene2 = new welcomeScene(mainView, parserObject);
+        welcomeScene2 = new welcomeScene(mainView, parserObject->user);
         mainView->setScene(welcomeScene2);
     }
     else{
