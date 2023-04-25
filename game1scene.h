@@ -22,19 +22,15 @@ private:
   bool flagToMoveCloudHorizontal;
   QGraphicsPixmapItem *cloud;
   int level;
-  //QVector<waterDroplet*> *allDrops;
 
 public:
     game1scene(int level);
-    //int waterDropletCounter;
     int *points;
     int *collectedWaterDroplets;
     int *missedWaterDroplets;
 
-
 public slots:
     void generateDropletAndCount();
-//    void handleCollision();
     bool displayWinMessage();
     bool displayLoseMessage();
     void setGameLevel(int level); // set the level of the game
