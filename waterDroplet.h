@@ -7,7 +7,6 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 
-//Water droplet class
 class waterDroplet : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT

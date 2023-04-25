@@ -52,16 +52,14 @@ private:
     QGraphicsProxyWidget* hardWidget;
 
 public:
-    //welcomeScene();
+    int avatarSelection;
     parser *parserObject;
-    welcomeScene(QGraphicsView* view, QJsonObject user, int avatarSelection);
+    welcomeScene(QGraphicsView* view, parser *parserObject, int avatarSelection, bool birthdayToday);
 
 public slots:
     void onEasyButtonClicked();
     void onMediumButtonClicked();
     void onHardButtonClicked();
-    bool hasBirthdayToday(QString userBirthdate);
-    QDate getTodayDate();
 };
 
 #endif // WELCOMESCENE_H

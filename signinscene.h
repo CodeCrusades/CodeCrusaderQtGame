@@ -23,7 +23,6 @@ private:
     QTextEdit* usernameEdit;
     QGraphicsProxyWidget* usernameWidget;
     QGraphicsTextItem* password;
-    //QTextEdit* passwordEdit;
     QLineEdit *passwordEdit;
     QGraphicsProxyWidget* passwordWidget;
 
@@ -35,6 +34,7 @@ public:
     parser *parserObject;
     int avatarSelection;
     signInScene(QGraphicsView* view, parser *parserObject);
+    bool hasBirthdayToday();
 
 public slots:
     void onLoginButtonClicked();

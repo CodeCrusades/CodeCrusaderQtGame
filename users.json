@@ -1,79 +1,101 @@
 [
     {
         "2GamesAgo": 0,
-        "3GamesAgo": 45,
-        "BestGame": 45,
-        "Birthday": "12345",
-        "FirstName": "lauryn",
-        "LastName": "hansen",
-        "Password": "98765",
-        "UserName": "laurynH",
-        "lastGame": 15
+        "3GamesAgo": 0,
+        "BestGame": 0,
+        "Birthday": "04-25-1994",
+        "FirstName": "Jack",
+        "LastName": "Neely",
+        "Password": "Neely1994",
+        "UserName": "Jack",
+        "lastGame": 0
+    },
+    {
+        "2GamesAgo": 0,
+        "3GamesAgo": 0,
+        "BestGame": 65,
+        "Birthday": "04-25-1994",
+        "FirstName": "Levi",
+        "LastName": "Neely",
+        "Password": "Ljn123!@#",
+        "UserName": "levineely",
+        "lastGame": 65
+    },
+    {
+        "2GamesAgo": 0,
+        "3GamesAgo": 0,
+        "BestGame": 0,
+        "Birthday": "04-25-1994",
+        "FirstName": "Levi",
+        "LastName": "Neely",
+        "Password": "Ljn123!@#",
+        "UserName": "levineely1",
+        "lastGame": 0
+    },
+    {
+        "2GamesAgo": 0,
+        "3GamesAgo": 0,
+        "BestGame": 0,
+        "Birthday": "04-25-1994",
+        "FirstName": "Pants",
+        "LastName": "Pantsy",
+        "Password": "Ljn123!@#",
+        "UserName": "pantaloons",
+        "lastGame": 0
+    },
+    {
+        "2GamesAgo": 0,
+        "3GamesAgo": 0,
+        "BestGame": 0,
+        "Birthday": "04-25-1994",
+        "FirstName": "asdf",
+        "LastName": "asdf",
+        "Password": "Ljn123!@#",
+        "UserName": "asdf",
+        "lastGame": 0
+    },
+    {
+        "2GamesAgo": 0,
+        "3GamesAgo": 0,
+        "BestGame": 0,
+        "Birthday": "04-25-1994",
+        "FirstName": "qwer",
+        "LastName": "qwer",
+        "Password": "Ljn123!@#",
+        "UserName": "qwer",
+        "lastGame": 0
+    },
+    {
+        "2GamesAgo": 0,
+        "3GamesAgo": 0,
+        "BestGame": 0,
+        "Birthday": "04-25-1994",
+        "FirstName": "fuck",
+        "LastName": "fuck",
+        "Password": "Ljn123!@#",
+        "UserName": "fuck",
+        "lastGame": 0
+    },
+    {
+        "2GamesAgo": 0,
+        "3GamesAgo": 0,
+        "BestGame": 0,
+        "Birthday": "04-25-1995",
+        "FirstName": "jorbi",
+        "LastName": "jorbi",
+        "Password": "Ljn123!@#",
+        "UserName": "jorbi",
+        "lastGame": 0
     },
     {
         "2GamesAgo": 0,
         "3GamesAgo": 0,
         "BestGame": 0,
         "Birthday": "0425",
-        "FirstName": "gloria",
-        "LastName": "D",
-        "Password": "12345",
-        "UserName": "gloriaD",
+        "FirstName": "Jake",
+        "LastName": "Flynn",
+        "Password": "Ljn123!@#",
+        "UserName": "Jake",
         "lastGame": 0
-    },
-    {
-        "2GamesAgo": 0,
-        "3GamesAgo": 0,
-        "BestGame": 0,
-        "Birthday": "0598",
-        "FirstName": "cheese",
-        "LastName": "gems",
-        "Password": "canoli",
-        "UserName": "daCheese",
-        "lastGame": 0
-    },
-    {
-        "2GamesAgo": 0,
-        "3GamesAgo": 0,
-        "BestGame": 0,
-        "Birthday": "0426",
-        "FirstName": "Nabil",
-        "LastName": "M",
-        "Password": "12345678",
-        "UserName": "nM",
-        "lastGame": 0
-    },
-    {
-        "2GamesAgo": 0,
-        "3GamesAgo": 0,
-        "BestGame": 0,
-        "Birthday": "2345",
-        "FirstName": "Karl",
-        "LastName": "Malone",
-        "Password": "247",
-        "UserName": "loveBug",
-        "lastGame": 0
-    },
-    {
-        "2GamesAgo": 0,
-        "3GamesAgo": 0,
-        "BestGame": 0,
-        "Birthday": "0909",
-        "FirstName": "sdfsd",
-        "LastName": "sdf",
-        "Password": "3434",
-        "UserName": "lovebug",
-        "lastGame": 0
-    },
-    {
-        "2GamesAgo": 0,
-        "3GamesAgo": 0,
-        "BestGame": 20,
-        "Birthday": "0423",
-        "FirstName": "hanna",
-        "LastName": "kay",
-        "Password": "1234",
-        "UserName": "hK",
-        "lastGame": 20
     }
 ]
