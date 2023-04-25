@@ -3,9 +3,10 @@
 #define GAME1SCENE_H
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
-#include "bucket.h"
-#include "waterDroplet.h"
 #include <QObject>
+
+class waterDroplet;
+class bucket;
 
 //Game scene class
 class game1scene : public QGraphicsScene
@@ -29,7 +30,6 @@ public:
     int *points;
     int *collectedWaterDroplets;
     int *missedWaterDroplets;
-
 
 public slots:
     void generateDropletAndCount();

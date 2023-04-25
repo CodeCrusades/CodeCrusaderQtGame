@@ -1,16 +1,19 @@
 #include "homescene.h"
+#include "signinscene.h"
+#include "signupscene.h"
+#include "welcomescene.h"
 
 homescene::homescene(QGraphicsView *view) : QGraphicsScene(), mainView(view) {
-    //add background
+    //Add background
     setBackgroundBrush(QBrush(QImage(":/images/homeScreen.jpg").scaledToHeight(512) .scaledToWidth(910)));
     setSceneRect(0,0,908,510);
 
-    // other scenes
+    //Other scenes
     signInPage = new signInScene(mainView);
     signUpPage = new signUpScene(mainView);
     welcomeScene1 = new welcomeScene(mainView);
 
-    //add sign in button
+    //Add sign in button
     QPushButton* signInButton;
     QGraphicsProxyWidget* signInWidget;
 
@@ -26,12 +29,12 @@ homescene::homescene(QGraphicsView *view) : QGraphicsScene(), mainView(view) {
 
     addItem(signInWidget);
 
-    //use button to go from one scene to the next
+    //Use button to go from one scene to the next
     QObject::connect(signInButton, &QPushButton::clicked, [=]() {
         mainView->setScene(signInPage);
     });
 
-    //add sign up button
+    //Add sign up button
     QPushButton* signUpButton;
     QGraphicsProxyWidget* signUpWidget;
 
@@ -50,7 +53,7 @@ homescene::homescene(QGraphicsView *view) : QGraphicsScene(), mainView(view) {
         mainView->setScene(signUpPage);
     });
 
-    //add continue as guest button
+    //Add continue as guest button
     QPushButton* guestButton;
     QGraphicsProxyWidget* guestWidget;
 
@@ -67,13 +70,13 @@ homescene::homescene(QGraphicsView *view) : QGraphicsScene(), mainView(view) {
 
     addItem(guestWidget);
 
-    //button taking us to sign in page
+    //Button taking us to sign in page
     connect(signInButton, &QPushButton::clicked, this, &homescene::onSignInButtonClicked);
 
-    //button taking us to sign up page
+    //Button taking us to sign up page
     connect(signUpButton, &QPushButton::clicked, this, &homescene::onSignUpButtonClicked);
 
-    //button taking us to guest page
+    //Button taking us to guest page
     connect(guestButton, &QPushButton::clicked, this, &homescene::onGuestButtonClicked);
 
 }

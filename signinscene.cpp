@@ -8,11 +8,11 @@ signInScene::signInScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
     //welcome page
     welcomeScene1 = new welcomeScene(mainView);
 
-    //add background
+    //Add background
     setBackgroundBrush(QBrush(QColor(220, 240, 255), Qt::SolidPattern));
     setSceneRect(0,0,908,510);
 
-    //add text edit space for user to type in their username
+    //Add text edit space for user to type in their username
     username = new QGraphicsTextItem();
     usernameEdit = new QTextEdit();
     usernameWidget = new QGraphicsProxyWidget();
@@ -33,7 +33,7 @@ signInScene::signInScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
     addItem(username);
     addItem(usernameWidget);
 
-    //add text edit space for user to type in their password
+    //Add text edit space for user to type in their password
     password = new QGraphicsTextItem();
     passwordEdit = new QTextEdit();
     passwordWidget = new QGraphicsProxyWidget();
@@ -64,10 +64,10 @@ signInScene::signInScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
 
     addItem(loginWidget);
 
-    //button taking us to welcome page
+    //Button taking us to welcome page
     connect(login, &QPushButton::clicked, this, &signInScene::onLoginButtonClicked);
 
-    //spawning error message if a wrong password is entered
+    //Spawning error message if a wrong password is entered
     errorMessage = new QGraphicsTextItem();
 
     errorMessage->setPlainText("Wrong password");

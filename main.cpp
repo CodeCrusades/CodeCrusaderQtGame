@@ -6,18 +6,18 @@
 int main(int argc, char **argv){
     QApplication app (argc,argv);
 
-    //create a view
+    //Create a view
      qInfo("About to create a view.");
      QGraphicsView* mainView = new QGraphicsView();
 
-     //create a scene
+     //Create a scene
      qInfo("About to create a scene.");
      homescene *mainScene = new homescene(mainView);
 
-    //add the scene to the view
+    //Add the scene to the view
     mainView->setScene(mainScene);
 
-    //show the view
+    //Show the view
     qInfo("About to show the view.");
     mainView->show();
 
