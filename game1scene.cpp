@@ -13,14 +13,18 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include <QMediaPlayer>
+#include <QGraphicsItem>
+#include <QImage>
+#include <QFont>
+#include <QDate>
 
 //Contructor
 game1scene::game1scene(int level)
     : QGraphicsScene()
 {
     this->level = level;
-   // allDrops = new QVector<waterDroplet*>();
-  // add bucket
+
+  //Add bucket
   bucketItem = new bucket();
   addItem(bucketItem);
   bucketItem->setPixmap(QPixmap(":/images/bucket.png").scaled(150, 150));
@@ -28,32 +32,29 @@ game1scene::game1scene(int level)
   bucketItem->setFocus();
   bucketItem->setPos(400, 365);
 
-  // add background
+  //Add background
   //Change background to be a gif??????????
   setBackgroundBrush(QBrush(QImage(":/images/background.jpg").scaledToHeight(512) .scaledToWidth(910)));
   setSceneRect(0, 0, 908, 510);
 
-  // add the cloud
+  //Add the cloud
   cloud = new QGraphicsPixmapItem(QPixmap("://images/cloud.png").scaled(380,90));
   cloud->setPos(250, 0);
   addItem(cloud);
 
-    //waterDropletCounter = 0;
   points = new int(0);
   collectedWaterDroplets = new int(0);
   missedWaterDroplets = new int(0);
   missedFiveDroplet = false;
-
   win = false;
 
-  // add multiple droplets to game scence
+  //Add multiple droplets to game scence
   spawnDropletsTimer = new QTimer(this);
   connect(spawnDropletsTimer, &QTimer::timeout, this, &game1scene::generateDropletAndCount);
-  // Create the level selection menu
+  //Create the level selection menu
   setGameLevel(level);
-  //Figure out a way to stop drops from spawning, UPDATE: JUST USE THE ->STOP() METHOD OF THE TIMER LOL
 
-  // slot to move the cloud
+  //Slot to move the cloud
   flagToMoveCloudHorizontal = false;
   QTimer *cloudTimer = new QTimer(this);
   connect (cloudTimer, &QTimer::timeout, this, &game1scene::moveTheCloud);
@@ -96,58 +97,82 @@ void game1scene::generateDropletAndCount() {
     }
 }
 
+//Method for displaying win message
 bool game1scene::displayWinMessage() {
-     QWidget *winWidget = new QWidget();
-     winWidget->move(200, 200);
-     winWidget->setStyleSheet("background-color:blue");
-     QVBoxLayout *layout = new QVBoxLayout;
-     QLabel *label = new QLabel("Congratulations, you won!");
-     label->setStyleSheet("font-size: 40px; font-family: Arial;");
+//     QWidget *winWidget = new QWidget();
+//     winWidget->move(320, 100);
+//     winWidget->setStyleSheet("background-color:purple");
 
-     QPushButton *closeButton = new QPushButton("Close");
-     connect(closeButton, &QPushButton::clicked, winWidget, &QWidget::close);
+//     QVBoxLayout *layout = new QVBoxLayout;
+//     QLabel *label = new QLabel("You won!");
+//     label->setStyleSheet("font-size: 60px; font-family: Arial;");
 
-     layout->addWidget(label);
-     layout->addWidget(closeButton);
+     //Adding a winner picture
+     QImage image(":/images/755t.gif");
+     int newWidth = 908;
+     int newHeight = 510;
+     QImage resizedImage = image.scaled(newWidth,newHeight, Qt::KeepAspectRatio); // scaling the image while maintaining aspect ratio
+     QGraphicsPixmapItem *imageWrapper = new QGraphicsPixmapItem(QPixmap::fromImage(resizedImage));
+     imageWrapper->setPos(120,0);
+     addItem(imageWrapper);
 
-     winWidget->setLayout(layout);
-     this->addWidget(winWidget);
+//     QPushButton *closeButton = new QPushButton("Close");
+//     connect(closeButton, &QPushButton::clicked, winWidget, &QWidget::close);
+
+//     layout->addWidget(label);
+//     layout->addWidget(closeButton);
+
+//     winWidget->setLayout(layout);
+//     this->addWidget(winWidget);
      removeItem(bucketItem);
 
      return true;
 }
 
-
+//Method for displaying lose message
 bool game1scene::displayLoseMessage() {
-     QWidget *loseWidget = new QWidget();
-     loseWidget->move(200, 200);
-     QVBoxLayout *layoutL = new QVBoxLayout;
-     QLabel *labelL = new QLabel("You lost!");
-     QPushButton *closeButtonL = new QPushButton("Close");
-     connect(closeButtonL, &QPushButton::clicked, loseWidget, &QWidget::close);
-     layoutL->addWidget(labelL);
-     layoutL->addWidget(closeButtonL);
-     loseWidget->setLayout(layoutL);
-     this->addWidget(loseWidget);
+//     QWidget *loseWidget = new QWidget();
+//     loseWidget->move(320, 100);
+//     loseWidget->setStyleSheet("background-color:orange");
+//     QVBoxLayout *layoutL = new QVBoxLayout;
+//     QLabel *labelL = new QLabel("You lost!");
+//     labelL->setStyleSheet("font-size: 60px; font-family: Arial;");
+//     labelL->setStyleSheet("QLabel { background-color : orange color : blue; }");
+//     QPushButton *closeButtonL = new QPushButton("Close");
+//     connect(closeButtonL, &QPushButton::clicked, loseWidget, &QWidget::close);
+//     layoutL->addWidget(labelL);
+//     layoutL->addWidget(closeButtonL);
+//     loseWidget->setLayout(layoutL);
+//     this->addWidget(loseWidget);
+
+     QImage image(":/images/Up8y.gif");
+     int newWidth = 908;
+     int newHeight = 510;
+     QImage resizedImage = image.scaled(newWidth,newHeight, Qt::KeepAspectRatio); // scaling the image while maintaining aspect ratio
+     QGraphicsPixmapItem *imageWrapper = new QGraphicsPixmapItem(QPixmap::fromImage(resizedImage));
+     imageWrapper->setPos(30,0);
+     addItem(imageWrapper);
+
      removeItem(bucketItem);
      return true;
 }
 
-// method to select game level => we may adjust the timer accordingly
+// Method to select game level => we may adjust the timer accordingly
 void game1scene::setGameLevel(int level) {
      switch (level) {
-     case 0:
+        case 0:
       spawnDropletsTimer->start(1500);
       break;
-     case 1:
+        case 1:
       spawnDropletsTimer->start(1000);
       break;
-     case 2:
+        case 2:
       spawnDropletsTimer->start(500);
       break;
      }
 }
 
+//Method to move the cloud
 void game1scene:: game1scene::moveTheCloud() {
      // Move the cloud horizontally
      int cloudSpeed = 40; // adjust this value to change the speed of the cloud

@@ -22,7 +22,6 @@ private:
     signUpScene *signUpPage;
 
 public:
-    //homescene();
     homescene(QGraphicsView* view);
 public slots:
     void onSignInButtonClicked();
