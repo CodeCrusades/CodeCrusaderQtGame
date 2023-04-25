@@ -21,6 +21,8 @@ private:
   bool missedFiveDroplet;
   bool flagToMoveCloudHorizontal;
   QGraphicsPixmapItem *cloud;
+  QMediaPlayer *player;
+  QAudioOutput *output;
   int level;
 
 public:
@@ -33,7 +35,7 @@ public slots:
     void generateDropletAndCount();
     bool displayWinMessage();
     bool displayLoseMessage();
-    void setGameLevel(int level); // set the level of the game
+    void setGameLevel(int level);
     void moveTheCloud();
 };
 

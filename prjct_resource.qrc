@@ -18,6 +18,14 @@
         <file>sounds/029_Decline_09.wav</file>
         <file>sounds/8Bit Platformer Loop.wav</file>
         <file>users.json</file>
+        <file>images/Image.jpg</file>
+        <file>images/8bit.jpg</file>
+        <file>images/correctStar.png</file>
+        <file>images/marioLeft.png</file>
+        <file>images/marioRight.png</file>
+        <file>sounds/lose.wav</file>
+        <file>sounds/endgame.wav</file>
+        <file>sounds/win.wav</file>
         <file>images/755t.gif</file>
         <file>images/Up8y.gif</file>
     </qresource>
