@@ -6,7 +6,6 @@
 #include <QObject>
 #include <QMediaPlayer>
 
-
 class waterDroplet;
 class bucket;
 class parser;

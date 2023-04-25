@@ -13,7 +13,8 @@ homescene::homescene(QGraphicsView *view, parser *parserObject) : QGraphicsScene
     //Other scenes
     signInPage = new signInScene(mainView, parserObject);
     signUpPage = new signUpScene(mainView, parserObject);
-    welcomeScene1 = new welcomeScene(mainView, parserObject->user);
+
+    welcomeScene1 = new welcomeScene(mainView, parserObject->user, 0);
 
     //Add sign in button
     QPushButton* signInButton;

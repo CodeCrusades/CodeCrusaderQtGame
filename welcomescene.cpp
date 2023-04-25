@@ -13,6 +13,8 @@ welcomeScene::welcomeScene(QGraphicsView *view, QJsonObject user) : QGraphicsSce
     qInfo("Entered welcomeScene");
 //    this->parserObject = parserObject;
 
+    //Avatar selection
+    this->avatarSelection = avatarSelection;
 
     //Fonts
     QFont welcomeFont("Georgia", 50);
@@ -32,7 +34,21 @@ welcomeScene::welcomeScene(QGraphicsView *view, QJsonObject user) : QGraphicsSce
     addItem(welcomeText);
 
     //Adding a profile picture
-    QImage image(":/profilePictures/orange.png");
+    QImage image;
+    switch (avatarSelection) {
+    case 0:
+        image = QImage(":/profilePictures/orange.png");
+        break;
+    case 1:
+        image = QImage(":/profilePictures/correctdeathstar.png");
+        break;
+    case 2:
+        image = QImage(":/profilePictures/unicorn.png");
+        break;
+    case 3:
+        image = QImage(":/profilePictures/trinity.png");
+        break;
+    }
     int newWidth = 100;
     int newHeight = 100;
     QImage resized_image = image.scaled(newWidth,newHeight, Qt::KeepAspectRatio); // scaling the image while maintaining aspect ratio
