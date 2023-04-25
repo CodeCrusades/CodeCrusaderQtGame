@@ -58,15 +58,26 @@ private:
 
 public:
     //signUpScene();
+    int avatarSelection;
     parser *parserObject;
     signUpScene(QGraphicsView* view, parser *parserObject); //Add user object parameter
 
 
 public slots:
     void onSignUpButtonClicked();
-     bool validPassword(QString password);
-//    void onGoBackButtonClicked(); //Implement if we have time
-
+    bool validPassword(QString password);
+    void onImageOne() {
+        avatarSelection = 0;
+    }
+    void onImageTwo() {
+        avatarSelection = 1;
+    }
+    void onImageThree() {
+        avatarSelection = 2;
+    }
+    void onImageFour() {
+        avatarSelection = 3;
+    }
 };
 
 #endif // SIGNUPSCENE_H

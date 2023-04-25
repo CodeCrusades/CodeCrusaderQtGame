@@ -1,20 +1,10 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/background.jpg</file>
-        <file>images/bucket.png</file>
         <file>images/cloud.png</file>
         <file>images/homeScreen.jpg</file>
-        <file>images/water.gif</file>
-        <file>profilePictures/ben.jpg</file>
-        <file>profilePictures/dave.jpg</file>
-        <file>profilePictures/deathstar.png</file>
-        <file>profilePictures/moustache.png</file>
-        <file>profilePictures/nabil.jpg</file>
-        <file>profilePictures/nightmare.gif</file>
         <file>profilePictures/orange.png</file>
         <file>profilePictures/trinity.png</file>
         <file>profilePictures/unicorn.png</file>
-        <file>profilePictures/varun.jpg</file>
         <file>sounds/029_Decline_09.wav</file>
         <file>sounds/8Bit Platformer Loop.wav</file>
         <file>images/Image.jpg</file>
@@ -22,11 +12,10 @@
         <file>images/correctStar.png</file>
         <file>images/marioLeft.png</file>
         <file>images/marioRight.png</file>
-        <file>sounds/lose.wav</file>
         <file>sounds/endgame.wav</file>
         <file>sounds/win.wav</file>
         <file>images/755t.gif</file>
         <file>images/Up8y.gif</file>
-        <file>images/MaleCharacterSpriteSheet.png</file>
+        <file>profilePictures/correctdeathstar.png</file>
     </qresource>
 </RCC>

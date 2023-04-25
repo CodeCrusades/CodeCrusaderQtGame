@@ -104,13 +104,6 @@ void game1scene::generateDropletAndCount() {
 
 //Method for displaying win message
 bool game1scene::displayWinMessage() {
-//     QWidget *winWidget = new QWidget();
-//     winWidget->move(320, 100);
-//     winWidget->setStyleSheet("background-color:purple");
-
-//     QVBoxLayout *layout = new QVBoxLayout;
-//     QLabel *label = new QLabel("You won!");
-//     label->setStyleSheet("font-size: 60px; font-family: Arial;");
 
      //Adding a winner picture
      QImage image(":/images/755t.gif");
@@ -122,15 +115,6 @@ bool game1scene::displayWinMessage() {
      addItem(imageWrapper);
      player->setSource(QUrl("qrc:/sounds/win.wav"));
      player->play();
-
-//     QPushButton *closeButton = new QPushButton("Close");
-//     connect(closeButton, &QPushButton::clicked, winWidget, &QWidget::close);
-
-//     layout->addWidget(label);
-//     layout->addWidget(closeButton);
-
-//     winWidget->setLayout(layout);
-//     this->addWidget(winWidget);
      removeItem(bucketItem);
 
      return true;
@@ -138,20 +122,6 @@ bool game1scene::displayWinMessage() {
 
 //Method for displaying lose message
 bool game1scene::displayLoseMessage() {
-//     QWidget *loseWidget = new QWidget();
-//     loseWidget->move(320, 100);
-//     loseWidget->setStyleSheet("background-color:orange");
-//     QVBoxLayout *layoutL = new QVBoxLayout;
-//     QLabel *labelL = new QLabel("You lost!");
-//     labelL->setStyleSheet("font-size: 60px; font-family: Arial;");
-//     labelL->setStyleSheet("QLabel { background-color : orange color : blue; }");
-//     QPushButton *closeButtonL = new QPushButton("Close");
-//     connect(closeButtonL, &QPushButton::clicked, loseWidget, &QWidget::close);
-//     layoutL->addWidget(labelL);
-//     layoutL->addWidget(closeButtonL);
-//     loseWidget->setLayout(layoutL);
-//     this->addWidget(loseWidget);
-
      QImage image(":/images/Up8y.gif");
      int newWidth = 908;
      int newHeight = 510;
@@ -183,7 +153,7 @@ void game1scene::setGameLevel(int level) {
 //Method to move the cloud
 void game1scene:: game1scene::moveTheCloud() {
      // Move the cloud horizontally
-     int cloudSpeed = 1; // adjust this value to change the speed of the cloud
+     int cloudSpeed = 1;
      if(cloud->x() >= 600) flagToMoveCloudHorizontal = false;
      if(cloud->x() < 0 ) flagToMoveCloudHorizontal = true;
 
@@ -192,6 +162,6 @@ void game1scene:: game1scene::moveTheCloud() {
       cloud->setPos(cloud->x() - cloudSpeed, cloud->y());
      } else {
       //right
-      cloud->setPos(cloud->x() + cloudSpeed, cloud->y()); // update the position of the cloud sprite
+      cloud->setPos(cloud->x() + cloudSpeed, cloud->y());
      }
 }

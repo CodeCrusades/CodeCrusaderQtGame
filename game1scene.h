@@ -5,10 +5,6 @@
 #include <QGraphicsScene>
 #include <QObject>
 #include <QMediaPlayer>
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 
 class waterDroplet;
 class bucket;

@@ -6,6 +6,7 @@
 #include <QTextEdit>
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
+#include <QGroupBox>
 
 class welcomeScene;
 class parser;
@@ -17,7 +18,6 @@ class signInScene: public QGraphicsScene
 private:
     QGraphicsView* mainView;
     welcomeScene *welcomeScene1;
-
     QGraphicsTextItem* username;
     QTextEdit* usernameEdit;
     QGraphicsProxyWidget* usernameWidget;
@@ -31,13 +31,23 @@ private:
 
 public:
     parser *parserObject;
-    signInScene(QGraphicsView* view, parser *parserObject); //Also add user object (or QJson if we go that way)
-
-
+    int avatarSelection;
+    signInScene(QGraphicsView* view, parser *parserObject);
 
 public slots:
     void onLoginButtonClicked();
-
+    void onImageOne() {
+        avatarSelection = 0;
+    }
+    void onImageTwo() {
+        avatarSelection = 1;
+    }
+    void onImageThree() {
+        avatarSelection = 2;
+    }
+    void onImageFour() {
+        avatarSelection = 3;
+    }
 };
 
 #endif // SIGNINSCENE_H
