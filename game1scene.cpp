@@ -68,6 +68,38 @@ game1scene::game1scene(int level, parser *parserObject)
     output->setVolume(50);
     player->play();
 
+    //displaying points
+    //set font
+    QFont scoreFont("Courier New", 20);
+    scoreFont.setBold(true);
+
+    int levelRectWidth = 150;
+    int levelRectHeight = 50;
+    int sceneWidth = 908;
+//    int sceneHeight = 512;
+    int levelRectX = sceneWidth - 150;
+    int levelRectY = 0;
+    displayScoreRect = new QGraphicsRectItem(levelRectX, levelRectY, levelRectWidth, levelRectHeight);
+
+    QBrush levelRectBrush(Qt::darkCyan);
+    displayScoreRect->setBrush(levelRectBrush);
+    addItem(displayScoreRect);
+
+    scoreText = new QGraphicsTextItem();
+    scoreText->setPlainText("Score: ");
+    scoreText->setPos(displayScoreRect->boundingRect().topLeft() + QPointF (10,10));
+    scoreText->setDefaultTextColor(Qt::yellow);
+    scoreText->setFont(scoreFont);
+    addItem(scoreText);
+
+    livePoints = new QGraphicsTextItem();
+    livePoints->setPos(displayScoreRect->boundingRect().topLeft() + QPointF (90,10));
+    livePoints->setFont(scoreFont);
+    livePoints->setDefaultTextColor(Qt::black);
+
+    QTimer* pointUpdater = new QTimer(this);
+    connect(pointUpdater, &QTimer::timeout, this, &game1scene::updateScoreDisplay);
+    pointUpdater->start(1000);
 }
 
 
@@ -115,6 +147,17 @@ bool game1scene::displayWinMessage() {
      addItem(imageWrapper);
      player->setSource(QUrl("qrc:/sounds/win.wav"));
      player->play();
+
+
+
+//     QPushButton *closeButton = new QPushButton("Close");
+//     connect(closeButton, &QPushButton::clicked, winWidget, &QWidget::close);
+
+//     layout->addWidget(label);
+//     layout->addWidget(closeButton);
+
+//     winWidget->setLayout(layout);
+//     this->addWidget(winWidget);
      removeItem(bucketItem);
 
      return true;
@@ -123,7 +166,7 @@ bool game1scene::displayWinMessage() {
 //Method for displaying lose message
 bool game1scene::displayLoseMessage() {
      QImage image(":/images/Up8y.gif");
-     int newWidth = 908;
+     int newWidth = 3000;
      int newHeight = 510;
      QImage resizedImage = image.scaled(newWidth,newHeight, Qt::KeepAspectRatio); // scaling the image while maintaining aspect ratio
      QGraphicsPixmapItem *imageWrapper = new QGraphicsPixmapItem(QPixmap::fromImage(resizedImage));
@@ -164,4 +207,12 @@ void game1scene:: game1scene::moveTheCloud() {
       //right
       cloud->setPos(cloud->x() + cloudSpeed, cloud->y());
      }
+}
+
+void game1scene::updateScoreDisplay(){
+     //display scores
+     pointString = QString::number(*points);
+     livePoints->setPlainText(pointString);
+     addItem(livePoints);
+    // delete livePoints;
 }

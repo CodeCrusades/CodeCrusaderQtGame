@@ -26,6 +26,11 @@ private:
   QMediaPlayer *player;
   QAudioOutput *output;
   int level;
+  QGraphicsTextItem* livePoints;
+  QString pointString;
+  QGraphicsRectItem* displayScoreRect;
+  QGraphicsTextItem* scoreText;
+
 
 public:
     parser *parserObject;
@@ -41,6 +46,7 @@ public slots:
     bool displayLoseMessage();
     void setGameLevel(int level);
     void moveTheCloud();
+    void updateScoreDisplay();
 };
 
 #endif // GAME1SCENE_H

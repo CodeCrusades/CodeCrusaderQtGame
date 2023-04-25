@@ -7,6 +7,7 @@
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
 #include <QGroupBox>
+#include <QLineEdit>
 
 class welcomeScene;
 class parser;
@@ -22,7 +23,8 @@ private:
     QTextEdit* usernameEdit;
     QGraphicsProxyWidget* usernameWidget;
     QGraphicsTextItem* password;
-    QTextEdit* passwordEdit;
+    //QTextEdit* passwordEdit;
+    QLineEdit *passwordEdit;
     QGraphicsProxyWidget* passwordWidget;
 
     QPushButton* login;

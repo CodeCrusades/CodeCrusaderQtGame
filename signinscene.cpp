@@ -4,6 +4,7 @@
 #include <QGraphicsView>
 #include <QPushButton>
 #include <QLabel>
+#include <QLineEdit>
 
 signInScene::signInScene(QGraphicsView *view, parser *parserObject) : QGraphicsScene(), mainView(view) {
     qInfo("Entered signInScene");
@@ -65,7 +66,9 @@ signInScene::signInScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
 
     //Add text edit space for user to type in their password
     password = new QGraphicsTextItem();
-    passwordEdit = new QTextEdit();
+    //passwordEdit = new QTextEdit();
+    passwordEdit = new QLineEdit();
+    passwordEdit->setEchoMode(QLineEdit::Password);
     passwordWidget = new QGraphicsProxyWidget();
     passwordWidget->setWidget(passwordEdit);
 
@@ -73,6 +76,8 @@ signInScene::signInScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
     password->setPos(300, 295);
     password->setDefaultTextColor(Qt::black);
     password->setFont(font);
+
+
 
     passwordWidget->setPos(300, 25);
     passwordWidget->setPreferredSize(200, 25);
@@ -111,12 +116,15 @@ signInScene::signInScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
 }
 
 void signInScene::onLoginButtonClicked() {
-    qInfo() << "userNameEdit: " << usernameEdit->toPlainText();
-    qInfo() << "passwordEdit: " << passwordEdit->toPlainText();
+   // qInfo() << "userNameEdit: " << usernameEdit->toPlainText();
+   // qInfo() << "passwordEdit: " << passwordEdit->toPlainText();
    //if the username exists and their password is correct, log in player aka go to welcome screen
     if(parserObject->userExists(usernameEdit->toPlainText()) && parserObject->userPasswordMatches(usernameEdit->toPlainText(), passwordEdit->toPlainText())){
         parserObject->retrieveUserProfile(usernameEdit->toPlainText(), passwordEdit->toPlainText());
         welcomeScene1 = new welcomeScene(mainView, parserObject, avatarSelection);
+    if(parserObject->userExists(usernameEdit->toPlainText()) && parserObject->userPasswordMatches(usernameEdit->toPlainText(), passwordEdit->text())){
+        parserObject->retrieveUserProfile(usernameEdit->toPlainText(), passwordEdit->text());
+        welcomeScene1 = new welcomeScene(mainView, parserObject);
         mainView->setScene(welcomeScene1);
     }
     else{

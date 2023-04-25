@@ -5,6 +5,7 @@
 #include "QtWidgets/qgroupbox.h"
 #include "welcomescene.h"
 #include "parser.hpp"
+#include <QLineEdit>
 
 signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsScene(), mainView(view)
 {
@@ -128,10 +129,12 @@ signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
 
     //Add text edit space for user to type in their password
     newPassword = new QGraphicsTextItem();
-    newPasswordEdit = new QTextEdit();
+   //newPasswordEdit = new QTextEdit();
+    newPasswordEdit = new QLineEdit();
     newPasswordWidget = new QGraphicsProxyWidget();
     newPasswordWidget->setWidget(newPasswordEdit);
-
+    //newPasswordEdit->setEchoMode(QTextEdit::Password);
+    newPasswordEdit->setEchoMode(QLineEdit::Password);
     newPassword->setPlainText("password: ");
     newPassword->setPos(306, 345);
     newPassword->setDefaultTextColor(Qt::black);
@@ -175,10 +178,12 @@ signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
 void signUpScene::onSignUpButtonClicked() {
     if(validPassword(newUsernameEdit->toPlainText()) && !parserObject->userExists(newUsernameEdit->toPlainText())){
         qDebug() << "Inside the onSignUpButtonClicked method";
-        parserObject->makeUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->toPlainText(), newFirstNameEdit->toPlainText(), newLastNameEdit->toPlainText(), newDOBEdit->toPlainText());
+        parserObject->makeUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->text(), newFirstNameEdit->toPlainText(), newLastNameEdit->toPlainText(), newDOBEdit->toPlainText());
         parserObject->storeIntoFile(); //writes to JSON file
         parserObject->retrieveUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->toPlainText());
         welcomeScene2 = new welcomeScene(mainView, parserObject, avatarSelection);
+        parserObject->retrieveUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->text());
+        welcomeScene2 = new welcomeScene(mainView, parserObject);
         mainView->setScene(welcomeScene2);
     }
     else{
