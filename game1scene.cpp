@@ -69,6 +69,38 @@ game1scene::game1scene(int level, parser *parserObject)
     output->setVolume(50);
     player->play();
 
+    //displaying points
+    //set font
+    QFont scoreFont("Courier New", 20);
+    scoreFont.setBold(true);
+
+    int levelRectWidth = 150;
+    int levelRectHeight = 50;
+    int sceneWidth = 908;
+//    int sceneHeight = 512;
+    int levelRectX = sceneWidth - 150;
+    int levelRectY = 0;
+    displayScoreRect = new QGraphicsRectItem(levelRectX, levelRectY, levelRectWidth, levelRectHeight);
+
+    QBrush levelRectBrush(Qt::darkCyan);
+    displayScoreRect->setBrush(levelRectBrush);
+    addItem(displayScoreRect);
+
+    scoreText = new QGraphicsTextItem();
+    scoreText->setPlainText("Score: ");
+    scoreText->setPos(displayScoreRect->boundingRect().topLeft() + QPointF (10,10));
+    scoreText->setDefaultTextColor(Qt::yellow);
+    scoreText->setFont(scoreFont);
+    addItem(scoreText);
+
+    livePoints = new QGraphicsTextItem();
+    livePoints->setPos(displayScoreRect->boundingRect().topLeft() + QPointF (90,10));
+    livePoints->setFont(scoreFont);
+    livePoints->setDefaultTextColor(Qt::black);
+
+    QTimer* pointUpdater = new QTimer(this);
+    connect(pointUpdater, &QTimer::timeout, this, &game1scene::updateScoreDisplay);
+    pointUpdater->start(1000);
 }
 
 
@@ -123,6 +155,7 @@ bool game1scene::displayWinMessage() {
      addItem(imageWrapper);
      player->setSource(QUrl("qrc:/sounds/win.wav"));
      player->play();
+
 
 //     QPushButton *closeButton = new QPushButton("Close");
 //     connect(closeButton, &QPushButton::clicked, winWidget, &QWidget::close);
@@ -195,4 +228,12 @@ void game1scene:: game1scene::moveTheCloud() {
       //right
       cloud->setPos(cloud->x() + cloudSpeed, cloud->y()); // update the position of the cloud sprite
      }
+}
+
+void game1scene::updateScoreDisplay(){
+     //display scores
+     pointString = QString::number(*points);
+     livePoints->setPlainText(pointString);
+     addItem(livePoints);
+    // delete livePoints;
 }
