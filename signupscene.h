@@ -7,6 +7,7 @@
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
 #include <QCalendarWidget>
+#include <QLineEdit>
 
 class welcomeScene;
 class parser;
@@ -41,7 +42,8 @@ private:
     QGraphicsProxyWidget* newUsernameWidget;
 
     QGraphicsTextItem* newPassword;
-    QTextEdit* newPasswordEdit;
+    //QTextEdit* newPasswordEdit;
+    QLineEdit *newPasswordEdit;
     QGraphicsProxyWidget* newPasswordWidget;
 
 //    QPushButton* goBackButton;

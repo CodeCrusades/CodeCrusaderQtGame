@@ -187,7 +187,7 @@ bool game1scene::displayLoseMessage() {
 //     this->addWidget(loseWidget);
 
      QImage image(":/images/Up8y.gif");
-     int newWidth = 908;
+     int newWidth = 3000;
      int newHeight = 510;
      QImage resizedImage = image.scaled(newWidth,newHeight, Qt::KeepAspectRatio); // scaling the image while maintaining aspect ratio
      QGraphicsPixmapItem *imageWrapper = new QGraphicsPixmapItem(QPixmap::fromImage(resizedImage));
