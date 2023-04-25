@@ -5,9 +5,14 @@
 #include <QGraphicsScene>
 #include <QObject>
 #include <QMediaPlayer>
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 
 class waterDroplet;
 class bucket;
+class parser;
 
 //Game scene class
 class game1scene : public QGraphicsScene
@@ -27,10 +32,12 @@ private:
   int level;
 
 public:
-    game1scene(int level);
+    parser *parserObject;
+    game1scene(int level, parser *parserObject);
     int *points;
     int *collectedWaterDroplets;
     int *missedWaterDroplets;
+
 
 public slots:
     void generateDropletAndCount();

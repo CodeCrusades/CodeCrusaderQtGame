@@ -3,6 +3,7 @@
 #include <QTimer>
 #include<QGraphicsItem>
 
+
 //Other Constructor lol
 waterDroplet::waterDroplet(int *points, int *collectedWaterDroplets, int *missedWaterDroplets) {
   missedFiveDroplet = false;

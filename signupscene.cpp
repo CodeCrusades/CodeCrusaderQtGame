@@ -2,15 +2,17 @@
 //#include "homescene.h"
 #include <QGraphicsView>
 #include "welcomescene.h"
+#include "parser.hpp"
 
-signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
+signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsScene(), mainView(view)
 {
     //Add background
     setBackgroundBrush(QBrush(QColor(220, 240, 255), Qt::SolidPattern));
     setSceneRect(0,0,908,510);
+    this->parserObject = parserObject;
 
     //Welcome page
-    welcomeScene2 = new welcomeScene(mainView);
+    welcomeScene2 = new welcomeScene(mainView, parserObject);
 
     //Common font
     QFont font("Times New Roman", 20);
@@ -61,7 +63,7 @@ signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
     newDOBWidget = new QGraphicsProxyWidget();
     newDOBWidget->setWidget(newDOBEdit);
 
-    newDOB->setPlainText("DOB: ");
+    newDOB->setPlainText("DOB(MMDD): ");
     newDOB->setPos(340, 200);
     newDOB->setDefaultTextColor(Qt::black);
     newDOB->setFont(font);
@@ -146,10 +148,10 @@ signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
 
     addItem(moveForwardWidget);
 
-    calendar = new QCalendarWidget();
-    calendarWidget = new QGraphicsProxyWidget();
+    //calendar = new QCalendarWidget();
+    //calendarWidget = new QGraphicsProxyWidget();
     //calendarWidget->setWidget(calendarWidget);
-    addWidget(calendar);
+    //addWidget(calendar);
 
     //button taking us to welcome page
     connect(moveForwardButton, &QPushButton::clicked, this, &signUpScene::onSignUpButtonClicked);
@@ -166,6 +168,17 @@ void signUpScene::onSignUpButtonClicked() {
     //TODO: Add if statements under certain conditions
     //Also, connect validPassword to this as well
     //So: if validPassword -> if !userNameExists -> go forward, else, throw error message
+    if(!parserObject->userExists(newUsernameEdit->toPlainText())){
+        qDebug() << "Inside the onSignUpButtonClicked method";
+        parserObject->makeUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->toPlainText(), newFirstNameEdit->toPlainText(), newLastNameEdit->toPlainText(), newDOBEdit->toPlainText());
+        parserObject->storeIntoFile(); //writes to JSON file
+        parserObject->retrieveUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->toPlainText());
+        welcomeScene2 = new welcomeScene(mainView, parserObject);
+        mainView->setScene(welcomeScene2);
+    }
+    else{
+        addItem(errorMessage);
+    }
     mainView->setScene(welcomeScene2);
 }
 

@@ -1,14 +1,17 @@
 #include "welcomescene.h"
 #include "game1scene.h"
+#include "parser.hpp"
 #include <QImage>
 #include <QFont>
 #include <QDate>
 
-welcomeScene::welcomeScene(QGraphicsView *view) : QGraphicsScene(), mainView(view) {
+welcomeScene::welcomeScene(QGraphicsView *view, parser *parserObject) : QGraphicsScene(), mainView(view) {
     //Add background
     setBackgroundBrush(QBrush(QColor(220, 240, 255), Qt::SolidPattern));
     setSceneRect(0,0,908,510);
     qInfo("Entered welcomeScene");
+    this->parserObject = parserObject;
+
 
     //Fonts
     QFont welcomeFont("Georgia", 50);
@@ -42,7 +45,9 @@ welcomeScene::welcomeScene(QGraphicsView *view) : QGraphicsScene(), mainView(vie
     birthdayGreeting->setPos(320, 210);
     birthdayGreeting->setDefaultTextColor(Qt::red);
     birthdayGreeting->setFont(birthdayFont);
-    addItem(birthdayGreeting);
+    if(hasBirthdayToday(parserObject->user.value("bDAY").toString())){
+        addItem(birthdayGreeting);
+    }
 
     //Displaying the best scores
     int sceneHeight = 510;
@@ -54,26 +59,32 @@ welcomeScene::welcomeScene(QGraphicsView *view) : QGraphicsScene(), mainView(vie
     QBrush rectBrush(Qt::white);
     scoreRect->setBrush(rectBrush);
     addItem(scoreRect);
+
     bestScoreLabel = new QGraphicsTextItem();
-    bestScoreLabel->setPlainText("Best Scores:");
+    bestScoreLabel->setPlainText("High Score: " + parserObject->user.value("BestGame").toString());
     bestScoreLabel->setPos(scoreRect->boundingRect().topLeft() + QPointF (10,10));
     bestScoreLabel->setDefaultTextColor(Qt::black);
     bestScoreLabel->setFont(scoreFont);
     addItem(bestScoreLabel);
+
+    QString qstringTest = parserObject->user.value("lastGame").toString();
+    qInfo() << "bestScore1: " << "qstringTest: " << qstringTest;
     bestScore1 = new QGraphicsTextItem();
-    bestScore1->setPlainText("* 150 points");
+    bestScore1->setPlainText("Game1: " + parserObject->user.value("lastGame").toString());
     bestScore1->setPos(scoreRect->boundingRect().topLeft() + QPointF (40,50));
     bestScore1->setDefaultTextColor(Qt::black);
     bestScore1->setFont(scoreFont);
     addItem(bestScore1);
+
     bestScore2 = new QGraphicsTextItem();
-    bestScore2->setPlainText("* 120 points");
+    bestScore2->setPlainText("Game2: " + parserObject->user.value("2GamesAgo").toString());
     bestScore2->setPos(scoreRect->boundingRect().topLeft() + QPointF (40,80));
     bestScore2->setDefaultTextColor(Qt::black);
     bestScore2->setFont(scoreFont);
     addItem(bestScore2);
+
     bestScore3 = new QGraphicsTextItem();
-    bestScore3->setPlainText("* 100 points");
+    bestScore3->setPlainText("Game3: " + parserObject->user.value("3GamesAgo").toString());
     bestScore3->setPos(scoreRect->boundingRect().topLeft() + QPointF (40,110));
     bestScore3->setDefaultTextColor(Qt::black);
     bestScore3->setFont(scoreFont);
@@ -143,17 +154,17 @@ welcomeScene::welcomeScene(QGraphicsView *view) : QGraphicsScene(), mainView(vie
 }
 
 void welcomeScene::onEasyButtonClicked(){
-    playGame = new game1scene(Easy);
+    playGame = new game1scene(Easy, parserObject);
     mainView->setScene(playGame);
 }
 
 void welcomeScene::onMediumButtonClicked(){
-    playGame = new game1scene(Medium);
+    playGame = new game1scene(Medium, parserObject);
     mainView->setScene(playGame);
 }
 
 void welcomeScene::onHardButtonClicked(){
-    playGame = new game1scene(Hard);
+    playGame = new game1scene(Hard, parserObject);
     mainView->setScene(playGame);
 }
 

@@ -8,6 +8,7 @@
 #include <QPushButton>
 
 class welcomeScene;
+class parser;
 
 class signInScene: public QGraphicsScene
 {
@@ -29,7 +30,9 @@ private:
     QGraphicsTextItem* errorMessage;
 
 public:
-    signInScene(QGraphicsView* view); //Also add user object (or QJson if we go that way)
+    parser *parserObject;
+    signInScene(QGraphicsView* view, parser *parserObject); //Also add user object (or QJson if we go that way)
+
 
 
 public slots:

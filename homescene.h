@@ -10,6 +10,7 @@
 class welcomeScene;
 class signInScene;
 class signUpScene;
+class parser;
 
 
 class homescene: public QGraphicsScene
@@ -21,9 +22,10 @@ private:
     welcomeScene *welcomeScene1;
     signInScene *signInPage;
     signUpScene *signUpPage;
+    parser *parserObject;
 
 public:
-    homescene(QGraphicsView* view);
+    homescene(QGraphicsView* view, parser *parserObject);
 public slots:
     void onSignInButtonClicked();
     void onSignUpButtonClicked();

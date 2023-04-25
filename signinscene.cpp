@@ -1,12 +1,13 @@
 #include "signinscene.h"
 #include "welcomescene.h"
+#include "parser.hpp"
 #include <QGraphicsView>
 
-signInScene::signInScene(QGraphicsView *view) : QGraphicsScene(), mainView(view) {
+signInScene::signInScene(QGraphicsView *view, parser *parserObject) : QGraphicsScene(), mainView(view) {
     qInfo("Entered signInScene");
 
     //welcome page
-    welcomeScene1 = new welcomeScene(mainView);
+    this->parserObject = parserObject;
 
     //Add background
     setBackgroundBrush(QBrush(QColor(220, 240, 255), Qt::SolidPattern));
@@ -70,11 +71,20 @@ signInScene::signInScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
     //Spawning error message if a wrong password is entered
     errorMessage = new QGraphicsTextItem();
 
-    errorMessage->setPlainText("Wrong password");
+    errorMessage->setPlainText("Wrong username or password");
 
 }
 
 void signInScene::onLoginButtonClicked() {
-    //TODO: Add if statements under certain conditions
+    qInfo() << "userNameEdit: " << usernameEdit->toPlainText();
+    qInfo() << "passwordEdit: " << passwordEdit->toPlainText();
+   //if the username exists and their password is correct, log in player aka go to welcome screen
+    if(parserObject->userExists(usernameEdit->toPlainText()) && parserObject->userPasswordMatches(usernameEdit->toPlainText(), passwordEdit->toPlainText())){
+        parserObject->retrieveUserProfile(usernameEdit->toPlainText(), passwordEdit->toPlainText());
+        welcomeScene1 = new welcomeScene(mainView, parserObject);
         mainView->setScene(welcomeScene1);
+    }
+    else{
+        addItem(errorMessage);
+    }
 }

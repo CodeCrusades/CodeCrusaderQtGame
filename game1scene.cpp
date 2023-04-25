@@ -16,11 +16,14 @@
 #include <QImage>
 #include <QFont>
 #include <QDate>
+#include <QMediaPlayer>
+#include "parser.hpp"
 
 //Contructor
-game1scene::game1scene(int level)
+game1scene::game1scene(int level, parser *parserObject)
     : QGraphicsScene()
 {
+    this->parserObject = parserObject;
     this->level = level;
     bucketItem = new bucket();
     addItem(bucketItem);
@@ -70,15 +73,21 @@ game1scene::game1scene(int level)
 
 //Method to generate a water droplet
 void game1scene::generateDropletAndCount() {
-    if (*points >= 15) {
+    if (*points >= 150) {
         win = true;
         spawnDropletsTimer->stop();
         removeItem(bucketItem);
+        parserObject->updateUserScores(parserObject->user.value("UserName").toString(), *points);
+        parserObject->storeIntoFile();
     }
     if (*missedWaterDroplets >= 5) {
         missedFiveDroplet = true;
         spawnDropletsTimer->stop();
+        removeItem(bucketItem);
+        parserObject->updateUserScores(parserObject->user.value("UserName").toString(), *points);
+        parserObject->storeIntoFile();
     }
+
     waterDroplet *dropleeeet = new waterDroplet(points, collectedWaterDroplets, missedWaterDroplets);
 
     int random_number = arc4random() % 700;

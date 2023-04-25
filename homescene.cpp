@@ -2,16 +2,18 @@
 #include "signinscene.h"
 #include "signupscene.h"
 #include "welcomescene.h"
+#include "parser.hpp"
 
-homescene::homescene(QGraphicsView *view) : QGraphicsScene(), mainView(view) {
+homescene::homescene(QGraphicsView *view, parser *parserObject) : QGraphicsScene(), mainView(view) {
     //Add background
     setBackgroundBrush(QBrush(QImage(":/images/homeScreen.jpg").scaledToHeight(512) .scaledToWidth(910)));
     setSceneRect(0,0,908,510);
+    this->parserObject = parserObject;
 
     //Other scenes
-    signInPage = new signInScene(mainView);
-    signUpPage = new signUpScene(mainView);
-    welcomeScene1 = new welcomeScene(mainView);
+    signInPage = new signInScene(mainView, parserObject);
+    signUpPage = new signUpScene(mainView, parserObject);
+    welcomeScene1 = new welcomeScene(mainView, parserObject);
 
     //Add sign in button
     QPushButton* signInButton;
