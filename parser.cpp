@@ -9,6 +9,7 @@ parser::parser(){
     //Initialize allUsers as an empty array
     allUsers = new QJsonArray[20];
 
+
     //Open and read the file
     QFile file("/Users/lauryn.c.hansen/MSD/CodeCrusaderQtGame/users.json");
     if( !file.open(QIODevice::ReadOnly | QIODevice::Text)){
@@ -42,19 +43,19 @@ void parser::makeUserProfile(QString userName, QString password, QString fName, 
 
     qDebug() << "QJson object being initialized in makeUserProfile method.";
     //Add the new users data to a JSonObject
-    QJsonObject *user = new QJsonObject();
-    user->insert("UserName", userName);
-    user->insert("Password", password);
-    user->insert("FirstName", fName);
-    user->insert("LastName", lName);
-    user->insert("Birthday", bDay);
-    user->insert("lastGame", 0);
-    user->insert("2GamesAgo", 0);
-    user->insert("3GamesAgo", 0);
-    user->insert("BestGame", 0);
+    QJsonObject *userInsert = new QJsonObject();
+    userInsert->insert("UserName", userName);
+    userInsert->insert("Password", password);
+    userInsert->insert("FirstName", fName);
+    userInsert->insert("LastName", lName);
+    userInsert->insert("Birthday", bDay);
+    userInsert->insert("lastGame", 0);
+    userInsert->insert("2GamesAgo", 0);
+    userInsert->insert("3GamesAgo", 0);
+    userInsert->insert("BestGame", 0);
 
     //Append the new user to the array of users
-    allUsers->append(QJsonValue(*user));
+    allUsers->append(QJsonValue(*userInsert));
 
 }
 
@@ -68,7 +69,17 @@ void parser::retrieveUserProfile(QString userName, QString password) {
 
             //When the user is found, return it as a JsonObject
             //allUsers->at(i).toObject();
-            user = temp;
+            QJsonObject tmp;
+            tmp.insert("UserName", userName);
+            tmp.insert("Password", password);
+            tmp.insert("FirstName", temp.value("FirstName").toString());
+            tmp.insert("LastName", temp.value("LirstName").toString());
+            tmp.insert("Birthday", temp.value("Birthday").toString());
+            tmp.insert("lastGame", 0);
+            tmp.insert("2GamesAgo", 0);
+            tmp.insert("3GamesAgo", 0);
+            tmp.insert("BestGame", 0);
+            user = tmp;
         }
     }
 
