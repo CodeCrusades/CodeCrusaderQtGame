@@ -6,9 +6,11 @@
 #include <QPushButton>
 #include <QGraphicsProxyWidget>
 #include <QGraphicsView>
-#include "signinscene.h"
-#include "signupscene.h"
-#include "welcomescene.h"
+
+class welcomeScene;
+class signInScene;
+class signUpScene;
+class parser;
 
 
 class homescene: public QGraphicsScene
@@ -20,10 +22,10 @@ private:
     welcomeScene *welcomeScene1;
     signInScene *signInPage;
     signUpScene *signUpPage;
+    parser *parserObject;
 
 public:
-    //homescene();
-    homescene(QGraphicsView* view);
+    homescene(QGraphicsView* view, parser *parserObject);
 public slots:
     void onSignInButtonClicked();
     void onSignUpButtonClicked();

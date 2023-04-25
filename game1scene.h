@@ -3,9 +3,13 @@
 #define GAME1SCENE_H
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
-#include "bucket.h"
-#include "waterDroplet.h"
 #include <QObject>
+#include <QMediaPlayer>
+
+
+class waterDroplet;
+class bucket;
+class parser;
 
 //Game scene class
 class game1scene : public QGraphicsScene
@@ -20,12 +24,13 @@ private:
   bool missedFiveDroplet;
   bool flagToMoveCloudHorizontal;
   QGraphicsPixmapItem *cloud;
+  QMediaPlayer *player;
+  QAudioOutput *output;
   int level;
-  //QVector<waterDroplet*> *allDrops;
 
 public:
-    game1scene(int level);
-    //int waterDropletCounter;
+    parser *parserObject;
+    game1scene(int level, parser *parserObject);
     int *points;
     int *collectedWaterDroplets;
     int *missedWaterDroplets;
@@ -33,10 +38,9 @@ public:
 
 public slots:
     void generateDropletAndCount();
-//    void handleCollision();
     bool displayWinMessage();
     bool displayLoseMessage();
-    void setGameLevel(int level); // set the level of the game
+    void setGameLevel(int level);
     void moveTheCloud();
 };
 

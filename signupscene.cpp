@@ -1,23 +1,26 @@
 #include "signupscene.h"
 //#include "homescene.h"
 #include <QGraphicsView>
+#include "welcomescene.h"
+#include "parser.hpp"
 
-signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
+signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsScene(), mainView(view)
 {
 
     qInfo("Entered signUpScene");
 
-    //add background
+    //Add background
     setBackgroundBrush(QBrush(QColor(220, 240, 255), Qt::SolidPattern));
     setSceneRect(0,0,908,510);
+    this->parserObject = parserObject;
 
-    //welcome page
-    welcomeScene2 = new welcomeScene(mainView);
+    //Welcome page
+    welcomeScene2 = new welcomeScene(mainView, parserObject);
 
-    //common font
+    //Common font
     QFont font("Times New Roman", 20);
 
-    //first name
+    //First name
     newFirstName = new QGraphicsTextItem();
     newFirstNameEdit = new QTextEdit();
     newFirstNameWidget = new QGraphicsProxyWidget();
@@ -37,7 +40,7 @@ signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
     addItem(newFirstName);
     addItem(newFirstNameWidget);
 
-    // last name
+    //Last name
     newLastName = new QGraphicsTextItem();
     newLastNameEdit = new QTextEdit();
     newLastNameWidget = new QGraphicsProxyWidget();
@@ -57,13 +60,13 @@ signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
     addItem(newLastName);
     addItem(newLastNameWidget);
 
-    // date of birth
+    //Date of birth
     newDOB  = new QGraphicsTextItem();
     newDOBEdit = new QTextEdit();
     newDOBWidget = new QGraphicsProxyWidget();
     newDOBWidget->setWidget(newDOBEdit);
 
-    newDOB->setPlainText("DOB: ");
+    newDOB->setPlainText("DOB(MMDD): ");
     newDOB->setPos(340, 200);
     newDOB->setDefaultTextColor(Qt::black);
     newDOB->setFont(font);
@@ -77,7 +80,7 @@ signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
     addItem(newDOB);
     addItem(newDOBWidget);
 
-    // profile pic
+    //Profile pic
     newProfilePic  = new QGraphicsTextItem();
     newProfilePicChoose = new QPushButton();
     newProfilePicWidget = new QGraphicsProxyWidget();
@@ -96,7 +99,7 @@ signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
     addItem(newProfilePic);
     addItem(newProfilePicWidget);
 
-    //add text edit space for user to type in their username
+    //Add text edit space for user to type in their username
     newUsername = new QGraphicsTextItem();
     newUsernameEdit = new QTextEdit();
     newUsernameWidget = new QGraphicsProxyWidget();
@@ -116,7 +119,7 @@ signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
     addItem(newUsername);
     addItem(newUsernameWidget);
 
-    //add text edit space for user to type in their password
+    //Add text edit space for user to type in their password
     newPassword = new QGraphicsTextItem();
     newPasswordEdit = new QTextEdit();
     newPasswordWidget = new QGraphicsProxyWidget();
@@ -136,7 +139,7 @@ signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
     addItem(newPassword);
     addItem(newPasswordWidget);
 
-    // continue to finish signing up button
+    //Continue to finish signing up button
     moveForwardButton = new QPushButton();
     moveForwardWidget = new QGraphicsProxyWidget();
     moveForwardWidget->setWidget(moveForwardButton);
@@ -148,17 +151,16 @@ signUpScene::signUpScene(QGraphicsView *view) : QGraphicsScene(), mainView(view)
 
     addItem(moveForwardWidget);
 
-    //
-    calendar = new QCalendarWidget();
-    calendarWidget = new QGraphicsProxyWidget();
+    //calendar = new QCalendarWidget();
+    //calendarWidget = new QGraphicsProxyWidget();
     //calendarWidget->setWidget(calendarWidget);
-    addWidget(calendar);
+    //addWidget(calendar);
 
     //button taking us to welcome page
     connect(moveForwardButton, &QPushButton::clicked, this, &signUpScene::onSignUpButtonClicked);
 
     //button taking us to home page
-//    connect(goBackButton, &QPushButton::clicked, this, &signUpScene::onGoBackButtonClicked);
+    //connect(goBackButton, &QPushButton::clicked, this, &signUpScene::onGoBackButtonClicked);
 
     //spawning error message if a wrong password is entered
     errorMessage = new QGraphicsTextItem();
@@ -169,6 +171,17 @@ void signUpScene::onSignUpButtonClicked() {
     //TODO: Add if statements under certain conditions
     //Also, connect validPassword to this as well
     //So: if validPassword -> if !userNameExists -> go forward, else, throw error message
+    if(!parserObject->userExists(newUsernameEdit->toPlainText())){
+        qDebug() << "Inside the onSignUpButtonClicked method";
+        parserObject->makeUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->toPlainText(), newFirstNameEdit->toPlainText(), newLastNameEdit->toPlainText(), newDOBEdit->toPlainText());
+        parserObject->storeIntoFile(); //writes to JSON file
+        parserObject->retrieveUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->toPlainText());
+        welcomeScene2 = new welcomeScene(mainView, parserObject);
+        mainView->setScene(welcomeScene2);
+    }
+    else{
+        addItem(errorMessage);
+    }
     mainView->setScene(welcomeScene2);
 }
 

@@ -3,10 +3,11 @@
 #include <QTimer>
 #include<QGraphicsItem>
 
+
 //Other Constructor lol
 waterDroplet::waterDroplet(int *points, int *collectedWaterDroplets, int *missedWaterDroplets) {
   missedFiveDroplet = false;
-  this->setPixmap((QPixmap(":/images/water.gif")).scaled(30, 30));
+  this->setPixmap((QPixmap(":/images/correctStar.png")).scaled(30, 30));
   timer_drop = new QTimer(this);
   connect(timer_drop, &QTimer::timeout, this, &waterDroplet::makeItRain);
   timer_drop->start(200);

@@ -1,14 +1,17 @@
 #include "welcomescene.h"
+#include "game1scene.h"
+#include "parser.hpp"
 #include <QImage>
 #include <QFont>
 #include <QDate>
 
-welcomeScene::welcomeScene(QGraphicsView *view) : QGraphicsScene(), mainView(view) {
-    //add background
+welcomeScene::welcomeScene(QGraphicsView *view, parser *parserObject) : QGraphicsScene(), mainView(view) {
+    //Add background
     setBackgroundBrush(QBrush(QColor(220, 240, 255), Qt::SolidPattern));
     setSceneRect(0,0,908,510);
-
     qInfo("Entered welcomeScene");
+    this->parserObject = parserObject;
+
 
     //Fonts
     QFont welcomeFont("Georgia", 50);
@@ -19,7 +22,7 @@ welcomeScene::welcomeScene(QGraphicsView *view) : QGraphicsScene(), mainView(vie
     playFont.setBold(true);
     QFont buttonFont("Futura", 20);
 
-
+    //Set welcome scene text
     welcomeText = new QGraphicsTextItem();
     welcomeText->setPlainText("Welcome!");
     welcomeText->setPos(310, 40);
@@ -27,31 +30,29 @@ welcomeScene::welcomeScene(QGraphicsView *view) : QGraphicsScene(), mainView(vie
     welcomeText->setFont(welcomeFont);
     addItem(welcomeText);
 
-    //adding a profile picture
+    //Adding a profile picture
     QImage image(":/profilePictures/orange.png");
     int newWidth = 100;
     int newHeight = 100;
     QImage resized_image = image.scaled(newWidth,newHeight, Qt::KeepAspectRatio); // scaling the image while maintaining aspect ratio
     imageHolder = new QGraphicsPixmapItem(QPixmap::fromImage(resized_image));
     imageHolder->setPos(375, 100);
-
     addItem(imageHolder);
 
-    //optional birthday greeting
+    //Optional birthday greeting
     birthdayGreeting = new QGraphicsTextItem();
     birthdayGreeting->setPlainText("Happy Birthday!");
     birthdayGreeting->setPos(320, 210);
     birthdayGreeting->setDefaultTextColor(Qt::red);
     birthdayGreeting->setFont(birthdayFont);
-    addItem(birthdayGreeting);
+    if(hasBirthdayToday(parserObject->user.value("bDAY").toString())){
+        addItem(birthdayGreeting);
+    }
 
-
-
-    //displaying the best scores
+    //Displaying the best scores
     int sceneHeight = 510;
     int scoreRectWidth = 200;
     int scoreRectHeight = 150;
-
     int scoreRectX = 5;
     int scoreRectY = sceneHeight - scoreRectHeight - 5;
     scoreRect = new QGraphicsRectItem(scoreRectX, scoreRectY, scoreRectWidth, scoreRectHeight);
@@ -60,47 +61,45 @@ welcomeScene::welcomeScene(QGraphicsView *view) : QGraphicsScene(), mainView(vie
     addItem(scoreRect);
 
     bestScoreLabel = new QGraphicsTextItem();
-    bestScoreLabel->setPlainText("Best Scores:");
+    bestScoreLabel->setPlainText("High Score: " + parserObject->user.value("BestGame").toString());
     bestScoreLabel->setPos(scoreRect->boundingRect().topLeft() + QPointF (10,10));
     bestScoreLabel->setDefaultTextColor(Qt::black);
     bestScoreLabel->setFont(scoreFont);
     addItem(bestScoreLabel);
 
+    QString qstringTest = parserObject->user.value("lastGame").toString();
+    qInfo() << "bestScore1: " << "qstringTest: " << qstringTest;
     bestScore1 = new QGraphicsTextItem();
-    bestScore1->setPlainText("* 150 points");
+    bestScore1->setPlainText("Game1: " + parserObject->user.value("lastGame").toString());
     bestScore1->setPos(scoreRect->boundingRect().topLeft() + QPointF (40,50));
     bestScore1->setDefaultTextColor(Qt::black);
     bestScore1->setFont(scoreFont);
     addItem(bestScore1);
 
     bestScore2 = new QGraphicsTextItem();
-    bestScore2->setPlainText("* 120 points");
+    bestScore2->setPlainText("Game2: " + parserObject->user.value("2GamesAgo").toString());
     bestScore2->setPos(scoreRect->boundingRect().topLeft() + QPointF (40,80));
     bestScore2->setDefaultTextColor(Qt::black);
     bestScore2->setFont(scoreFont);
     addItem(bestScore2);
 
     bestScore3 = new QGraphicsTextItem();
-    bestScore3->setPlainText("* 100 points");
+    bestScore3->setPlainText("Game3: " + parserObject->user.value("3GamesAgo").toString());
     bestScore3->setPos(scoreRect->boundingRect().topLeft() + QPointF (40,110));
     bestScore3->setDefaultTextColor(Qt::black);
     bestScore3->setFont(scoreFont);
     addItem(bestScore3);
 
-    // displaying levels
+    //Displaying levels
     int levelRectWidth = 250;
     int levelRectHeight = 220;
     int sceneWidth = 908;
-
     int levelRectX = sceneWidth - levelRectWidth - 5;
     int levelRectY = sceneHeight - levelRectHeight - 5;
     levelRect = new QGraphicsRectItem(levelRectX, levelRectY, levelRectWidth, levelRectHeight);
     QBrush levelRectBrush(Qt::darkCyan);
     levelRect->setBrush(levelRectBrush);
     addItem(levelRect);
-
-
-
     play = new QGraphicsTextItem();
     play->setPlainText("PLAY");
     play->setPos(levelRect->boundingRect().topLeft() + QPointF (80,10));
@@ -152,21 +151,23 @@ welcomeScene::welcomeScene(QGraphicsView *view) : QGraphicsScene(), mainView(vie
 
     //button taking us to guest page
     connect(hard, &QPushButton::clicked, this, &welcomeScene::onHardButtonClicked);
-
 }
 
 void welcomeScene::onEasyButtonClicked(){
-    playGame = new game1scene(Easy);
+    playGame = new game1scene(Easy, parserObject);
     mainView->setScene(playGame);
 }
+
 void welcomeScene::onMediumButtonClicked(){
-    playGame = new game1scene(Medium);
+    playGame = new game1scene(Medium, parserObject);
     mainView->setScene(playGame);
 }
+
 void welcomeScene::onHardButtonClicked(){
-    playGame = new game1scene(Hard);
+    playGame = new game1scene(Hard, parserObject);
     mainView->setScene(playGame);
 }
+
 bool::welcomeScene::hasBirthdayToday(QString userBirthdateString) {
     // find today's date
     QDate date = getTodayDate(); // get the current day,month,year
@@ -176,9 +177,9 @@ bool::welcomeScene::hasBirthdayToday(QString userBirthdateString) {
         qInfo("today is their birthday");
         return true;// if it matches then happy birthday
     }
-
     return false;
 }
+
 QDate welcomeScene::getTodayDate() {
     QDate date = QDateTime::currentDateTime().date();
     return date;

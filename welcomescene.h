@@ -10,7 +10,9 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
 #include <QDate>
-#include "game1scene.h"
+
+class game1scene;
+class parser;
 
 // game levels.
 typedef enum {
@@ -51,7 +53,8 @@ private:
 
 public:
     //welcomeScene();
-    welcomeScene(QGraphicsView* view);
+    parser *parserObject;
+    welcomeScene(QGraphicsView* view, parser *parserObject);
 
 public slots:
     void onEasyButtonClicked();

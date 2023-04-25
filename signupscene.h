@@ -7,8 +7,9 @@
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
 #include <QCalendarWidget>
-#include "welcomescene.h"
-//#include "homescene.h"
+
+class welcomeScene;
+class parser;
 
 class signUpScene: public QGraphicsScene
 {
@@ -57,7 +58,9 @@ private:
 
 public:
     //signUpScene();
-    signUpScene(QGraphicsView* view); //Add user object parameter
+    parser *parserObject;
+    signUpScene(QGraphicsView* view, parser *parserObject); //Add user object parameter
+
 
 public slots:
     void onSignUpButtonClicked();
