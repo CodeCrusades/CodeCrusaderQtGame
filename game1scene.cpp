@@ -1,9 +1,10 @@
 //Lauryn C. Hansen
 #include "game1scene.h"
 #include "waterDroplet.h"
+#include "bucket.h"
 #include <QTimer>
 #include <QObject>
-#include<QWidget>
+#include <QWidget>
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPushButton>

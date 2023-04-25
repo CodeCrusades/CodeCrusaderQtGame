@@ -6,9 +6,10 @@
 #include <QPushButton>
 #include <QGraphicsProxyWidget>
 #include <QGraphicsView>
-#include "signinscene.h"
-#include "signupscene.h"
-#include "welcomescene.h"
+
+class welcomeScene;
+class signInScene;
+class signUpScene;
 
 
 class homescene: public QGraphicsScene
