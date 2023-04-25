@@ -54,7 +54,7 @@ private:
 public:
     //welcomeScene();
     parser *parserObject;
-    welcomeScene(QGraphicsView* view, parser *parserObject);
+    welcomeScene(QGraphicsView* view, QJsonObject user);
 
 public slots:
     void onEasyButtonClicked();

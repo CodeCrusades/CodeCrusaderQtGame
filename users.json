@@ -1,13 +1,14 @@
 [
     {
-        "2GamesAgo": 45,
+        "2GamesAgo": 0,
+        "3GamesAgo": 45,
         "BestGame": 45,
         "Birthday": "12345",
         "FirstName": "lauryn",
         "LastName": "hansen",
         "Password": "98765",
         "UserName": "laurynH",
-        "lastGame": 0
+        "lastGame": 15
     },
     {
         "2GamesAgo": 0,
@@ -63,5 +64,16 @@
         "Password": "3434",
         "UserName": "lovebug",
         "lastGame": 0
+    },
+    {
+        "2GamesAgo": 0,
+        "3GamesAgo": 0,
+        "BestGame": 20,
+        "Birthday": "0423",
+        "FirstName": "hanna",
+        "LastName": "kay",
+        "Password": "1234",
+        "UserName": "hK",
+        "lastGame": 20
     }
 ]

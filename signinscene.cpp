@@ -85,8 +85,8 @@ void signInScene::onLoginButtonClicked() {
    // qInfo() << "passwordEdit: " << passwordEdit->toPlainText();
    //if the username exists and their password is correct, log in player aka go to welcome screen
     if(parserObject->userExists(usernameEdit->toPlainText()) && parserObject->userPasswordMatches(usernameEdit->toPlainText(), passwordEdit->text())){
-        parserObject->retrieveUserProfile(usernameEdit->toPlainText(), passwordEdit->text());
-        welcomeScene1 = new welcomeScene(mainView, parserObject);
+        parserObject->user = parserObject->retrieveUserProfile(usernameEdit->toPlainText(), passwordEdit->text());
+        welcomeScene1 = new welcomeScene(mainView, parserObject->user);
         mainView->setScene(welcomeScene1);
     }
     else{
