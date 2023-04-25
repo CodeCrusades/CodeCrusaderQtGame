@@ -6,7 +6,8 @@
 #include <QTextEdit>
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
-#include "welcomescene.h"
+
+class welcomeScene;
 
 class signInScene: public QGraphicsScene
 {

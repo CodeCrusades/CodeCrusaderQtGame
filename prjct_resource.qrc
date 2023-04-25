@@ -26,5 +26,7 @@
         <file>sounds/lose.wav</file>
         <file>sounds/endgame.wav</file>
         <file>sounds/win.wav</file>
+        <file>images/755t.gif</file>
+        <file>images/Up8y.gif</file>
     </qresource>
 </RCC>
