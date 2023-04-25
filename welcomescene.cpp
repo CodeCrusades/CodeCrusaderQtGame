@@ -6,12 +6,12 @@
 #include <QDate>
 #include <QString>
 
-welcomeScene::welcomeScene(QGraphicsView *view, QJsonObject user) : QGraphicsScene(), mainView(view) {
+welcomeScene::welcomeScene(QGraphicsView *view, parser *parserObject, int avatarSelection, bool birthdayToday) : QGraphicsScene(), mainView(view) {
     //Add background
     setBackgroundBrush(QBrush(QColor(220, 240, 255), Qt::SolidPattern));
     setSceneRect(0,0,908,510);
     qInfo("Entered welcomeScene");
-//    this->parserObject = parserObject;
+    this->parserObject = parserObject;
 
     //Avatar selection
     this->avatarSelection = avatarSelection;
@@ -57,12 +57,12 @@ welcomeScene::welcomeScene(QGraphicsView *view, QJsonObject user) : QGraphicsSce
     addItem(imageHolder);
 
     //Optional birthday greeting
-    birthdayGreeting = new QGraphicsTextItem();
-    birthdayGreeting->setPlainText("Happy Birthday!");
-    birthdayGreeting->setPos(320, 210);
-    birthdayGreeting->setDefaultTextColor(Qt::red);
-    birthdayGreeting->setFont(birthdayFont);
-    if(hasBirthdayToday(user.value("Birthday").toString())){
+    if (birthdayToday) {
+        birthdayGreeting = new QGraphicsTextItem();
+        birthdayGreeting->setPlainText("Happy Birthday!");
+        birthdayGreeting->setPos(320, 210);
+        birthdayGreeting->setDefaultTextColor(Qt::red);
+        birthdayGreeting->setFont(birthdayFont);
         addItem(birthdayGreeting);
     }
 
@@ -78,33 +78,30 @@ welcomeScene::welcomeScene(QGraphicsView *view, QJsonObject user) : QGraphicsSce
     addItem(scoreRect);
 
     bestScoreLabel = new QGraphicsTextItem();
-    qDebug() << "\tUSER FIRST NAME: " << user.value("FirstName");
-    qDebug() << "\tUSER BEST GAME: " << user.value("BestGame");
 
-    bestScoreLabel->setPlainText("High Score: " + QString::number(user.value("BestGame").toInt()));
+    bestScoreLabel->setPlainText("High Score: " + QString::number(parserObject->user.value("BestGame").toInt()));
     bestScoreLabel->setPos(scoreRect->boundingRect().topLeft() + QPointF (10,10));
     bestScoreLabel->setDefaultTextColor(Qt::black);
     bestScoreLabel->setFont(scoreFont);
     addItem(bestScoreLabel);
 
-    QString qstringTest = user.value("lastGame").toString();
-    qInfo() << "bestScore1: " << "qstringTest: " << qstringTest;
+    QString qstringTest = parserObject->user.value("lastGame").toString();
     bestScore1 = new QGraphicsTextItem();
-    bestScore1->setPlainText("Game1: " + QString::number(user.value("lastGame").toInt()));
+    bestScore1->setPlainText("Game1: " + QString::number(parserObject->user.value("lastGame").toInt()));
     bestScore1->setPos(scoreRect->boundingRect().topLeft() + QPointF (40,50));
     bestScore1->setDefaultTextColor(Qt::black);
     bestScore1->setFont(scoreFont);
     addItem(bestScore1);
 
     bestScore2 = new QGraphicsTextItem();
-    bestScore2->setPlainText("Game2: " + QString::number(user.value("2GamesAgo").toInt()));
+    bestScore2->setPlainText("Game2: " + QString::number(parserObject->user.value("2GamesAgo").toInt()));
     bestScore2->setPos(scoreRect->boundingRect().topLeft() + QPointF (40,80));
     bestScore2->setDefaultTextColor(Qt::black);
     bestScore2->setFont(scoreFont);
     addItem(bestScore2);
 
     bestScore3 = new QGraphicsTextItem();
-    bestScore3->setPlainText("Game3: " + QString::number(user.value("3GamesAgo").toInt()));
+    bestScore3->setPlainText("Game3: " + QString::number(parserObject->user.value("3GamesAgo").toInt()));
     bestScore3->setPos(scoreRect->boundingRect().topLeft() + QPointF (40,110));
     bestScore3->setDefaultTextColor(Qt::black);
     bestScore3->setFont(scoreFont);
@@ -186,21 +183,4 @@ void welcomeScene::onMediumButtonClicked(){
 void welcomeScene::onHardButtonClicked(){
     playGame = new game1scene(Hard, parserObject);
     mainView->setScene(playGame);
-}
-
-bool::welcomeScene::hasBirthdayToday(QString userBirthdateString) {
-    // find today's date
-    QDate date = getTodayDate(); // get the current day,month,year
-    QString todayDate = date.toString("MMdd");
-
-    if(todayDate == userBirthdateString) { // TODO verify that the userBirthdateString is in the format of MMdd (without the year plz)
-        qInfo("today is their birthday");
-        return true;// if it matches then happy birthday
-    }
-    return false;
-}
-
-QDate welcomeScene::getTodayDate() {
-    QDate date = QDateTime::currentDateTime().date();
-    return date;
 }

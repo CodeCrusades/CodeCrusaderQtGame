@@ -76,7 +76,6 @@ game1scene::game1scene(int level, parser *parserObject)
     int levelRectWidth = 150;
     int levelRectHeight = 50;
     int sceneWidth = 908;
-//    int sceneHeight = 512;
     int levelRectX = sceneWidth - 150;
     int levelRectY = 0;
     displayScoreRect = new QGraphicsRectItem(levelRectX, levelRectY, levelRectWidth, levelRectHeight);
@@ -123,7 +122,7 @@ void game1scene::generateDropletAndCount() {
     waterDroplet *dropleeeet = new waterDroplet(points, collectedWaterDroplets, missedWaterDroplets);
 
     int random_number = arc4random() % 700;
-    dropleeeet->setPos(random_number, 80); // x is set to 80 to make sure that droplets are generated beneath the cloud
+    dropleeeet->setPos(random_number, 90); // y is set to 80 to make sure that droplets are generated beneath the cloud
     this->addItem(dropleeeet);
 
     if(missedFiveDroplet){
@@ -148,18 +147,6 @@ bool game1scene::displayWinMessage() {
      player->setSource(QUrl("qrc:/sounds/win.wav"));
      player->play();
 
-
-
-//     QPushButton *closeButton = new QPushButton("Close");
-//     connect(closeButton, &QPushButton::clicked, winWidget, &QWidget::close);
-
-//     layout->addWidget(label);
-//     layout->addWidget(closeButton);
-
-//     winWidget->setLayout(layout);
-//     this->addWidget(winWidget);
-     removeItem(bucketItem);
-
      return true;
 }
 
@@ -172,9 +159,8 @@ bool game1scene::displayLoseMessage() {
      QGraphicsPixmapItem *imageWrapper = new QGraphicsPixmapItem(QPixmap::fromImage(resizedImage));
      imageWrapper->setPos(30,0);
      addItem(imageWrapper);
-      player->setSource(QUrl("qrc:/sounds/endgame.wav"));
+     player->setSource(QUrl("qrc:/sounds/endgame.wav"));
      player->play();
-     removeItem(bucketItem);
      return true;
 }
 
@@ -214,5 +200,4 @@ void game1scene::updateScoreDisplay(){
      pointString = QString::number(*points);
      livePoints->setPlainText(pointString);
      addItem(livePoints);
-    // delete livePoints;
 }

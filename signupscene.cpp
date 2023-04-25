@@ -17,9 +17,6 @@ signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
     //Avatar selection
     avatarSelection = 0;
 
-    //Welcome page
-    welcomeScene2 = new welcomeScene(mainView, parserObject->user, avatarSelection);
-
     //Common font
     QFont font("Times New Roman", 20);
 
@@ -28,19 +25,19 @@ signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
     QHBoxLayout *avatarLayout = new QHBoxLayout();
     avatar->setStyleSheet("background-color: rgb(220, 240, 255);");
     avatar->move(300, 225);
-    QPushButton *image1 = new QPushButton();
+    image1 = new QPushButton();
     image1->setIcon(QPixmap::fromImage(QImage(":/profilePictures/orange.png")));
     image1->setIconSize(QSize(30, 30));
     avatarLayout->addWidget(image1);
-    QPushButton *image2 = new QPushButton();
+    image2 = new QPushButton();
     image2->setIcon(QPixmap::fromImage(QImage(":/profilePictures/correctdeathstar.png")));
     image2->setIconSize(QSize(30, 30));
     avatarLayout->addWidget(image2);
-    QPushButton *image3 = new QPushButton();
+    image3 = new QPushButton();
     image3->setIcon(QPixmap::fromImage(QImage(":/profilePictures/unicorn.png")));
     image3->setIconSize(QSize(30, 30));
     avatarLayout->addWidget(image3);
-    QPushButton *image4 = new QPushButton();
+    image4 = new QPushButton();
     image4->setIcon(QPixmap::fromImage(QImage(":/profilePictures/trinity.png")));
     image4->setIconSize(QSize(30, 30));
     avatarLayout->addWidget(image4);
@@ -129,11 +126,9 @@ signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
 
     //Add text edit space for user to type in their password
     newPassword = new QGraphicsTextItem();
-   //newPasswordEdit = new QTextEdit();
     newPasswordEdit = new QLineEdit();
     newPasswordWidget = new QGraphicsProxyWidget();
     newPasswordWidget->setWidget(newPasswordEdit);
-    //newPasswordEdit->setEchoMode(QTextEdit::Password);
     newPasswordEdit->setEchoMode(QLineEdit::Password);
     newPassword->setPlainText("password: ");
     newPassword->setPos(306, 345);
@@ -162,34 +157,33 @@ signUpScene::signUpScene(QGraphicsView *view, parser *parserObject) : QGraphicsS
     addItem(moveForwardWidget);
 
     //Check for avatarSelection
-    connect(image1, &QPushButton::clicked, this, &signUpScene::onImageOne);
-    connect(image2, &QPushButton::clicked, this, &signUpScene::onImageTwo);
-    connect(image3, &QPushButton::clicked, this, &signUpScene::onImageThree);
-    connect(image4, &QPushButton::clicked, this, &signUpScene::onImageFour);
+    QObject::connect(image1, &QPushButton::clicked, this, &signUpScene::onImageOne);
+    QObject::connect(image2, &QPushButton::clicked, this, &signUpScene::onImageTwo);
+    QObject::connect(image3, &QPushButton::clicked, this, &signUpScene::onImageThree);
+    QObject::connect(image4, &QPushButton::clicked, this, &signUpScene::onImageFour);
 
     //button taking us to welcome page
     connect(moveForwardButton, &QPushButton::clicked, this, &signUpScene::onSignUpButtonClicked);
 
     //spawning error message if a wrong password is entered
     errorMessage = new QGraphicsTextItem();
-    addItem(errorMessage);
+    errorMessage->setDefaultTextColor(Qt::black);
+    errorMessage->setPlainText("Invalid username and/or password");
 }
 
 void signUpScene::onSignUpButtonClicked() {
-    if(validPassword(newUsernameEdit->toPlainText()) && !parserObject->userExists(newUsernameEdit->toPlainText())){
-        qDebug() << "Inside the onSignUpButtonClicked method";
+    if(validPassword(newPasswordEdit->text()) && !parserObject->userExists(newUsernameEdit->toPlainText())){
         parserObject->makeUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->text(), newFirstNameEdit->toPlainText(), newLastNameEdit->toPlainText(), newDOBEdit->toPlainText());
         parserObject->storeIntoFile(); //writes to JSON file
-        parserObject->retrieveUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->toPlainText());
-        welcomeScene2 = new welcomeScene(mainView, parserObject, avatarSelection);
         parserObject->retrieveUserProfile(newUsernameEdit->toPlainText(), newPasswordEdit->text());
-        welcomeScene2 = new welcomeScene(mainView, parserObject->user);
+        bool bday = hasBirthdayToday();
+        qInfo() << bday;
+        welcomeScene2 = new welcomeScene(mainView, parserObject, avatarSelection, bday);
         mainView->setScene(welcomeScene2);
     }
     else{
         addItem(errorMessage);
     }
-    mainView->setScene(welcomeScene2);
 }
 
 bool::signUpScene::validPassword(QString password) {
@@ -222,4 +216,14 @@ bool::signUpScene::validPassword(QString password) {
     else {
         return false;
     }
+}
+
+bool::signUpScene::hasBirthdayToday() {
+    // find today's date
+    QString todayDate = QDate::currentDate().toString("MMdd"); // get the current day,month,year
+    QString userBday = parserObject->user.value("Birthday").toString();
+    if((QString::compare(todayDate, userBday, Qt::CaseInsensitive)) == 0) { // TODO verify that the userBirthdateString is in the format of MMdd (without the year plz)
+        return true;// if it matches then happy birthday
+    }
+    return false;
 }

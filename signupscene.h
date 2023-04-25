@@ -19,7 +19,6 @@ class signUpScene: public QGraphicsScene
 private:
     QGraphicsView* mainView;
     welcomeScene *welcomeScene2;
-//    homescene *homeScene1;
 
     QGraphicsTextItem* newFirstName;
     QTextEdit* newFirstNameEdit;
@@ -42,12 +41,13 @@ private:
     QGraphicsProxyWidget* newUsernameWidget;
 
     QGraphicsTextItem* newPassword;
-    //QTextEdit* newPasswordEdit;
     QLineEdit *newPasswordEdit;
     QGraphicsProxyWidget* newPasswordWidget;
 
-//    QPushButton* goBackButton;
-//    QGraphicsProxyWidget* goBackWidget;
+    QPushButton *image1;
+    QPushButton *image2;
+    QPushButton *image3;
+    QPushButton *image4;
 
     QPushButton* moveForwardButton;
     QGraphicsProxyWidget* moveForwardWidget;
@@ -59,11 +59,10 @@ private:
 
 
 public:
-    //signUpScene();
     int avatarSelection;
     parser *parserObject;
-    signUpScene(QGraphicsView* view, parser *parserObject); //Add user object parameter
-
+    signUpScene(QGraphicsView* view, parser *parserObject);
+    bool hasBirthdayToday();
 
 public slots:
     void onSignUpButtonClicked();

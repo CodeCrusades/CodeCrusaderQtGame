@@ -11,18 +11,15 @@ int main(int argc, char **argv){
     parser *parserObject = new parser();
 
     //Create a view
-     qInfo("About to create a view.");
      QGraphicsView* mainView = new QGraphicsView();
 
      //Create a scene
-     qInfo("About to create a scene.");
      homescene *mainScene = new homescene(mainView, parserObject);
 
     //Add the scene to the view
     mainView->setScene(mainScene);
 
     //Show the view
-    qInfo("About to show the view.");
     mainView->show();
 
     return app.exec();

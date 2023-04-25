@@ -11,7 +11,7 @@ parser::parser(){
 
 
     //Open and read the file
-    QFile file("/Users/lauryn.c.hansen/MSD/CodeCrusaderQtGame/users.json");
+    QFile file("/Users/levineely/CodeCrusaderQtGame/users.json");
     if( !file.open(QIODevice::ReadOnly | QIODevice::Text)){
         qDebug() << "File not open.";
     }
@@ -22,12 +22,6 @@ parser::parser(){
     //Ensure the file reads into the temporary array correctly
     QJsonParseError error;
     QJsonDocument doc = QJsonDocument::fromJson(data, &error);
-//    if (doc.isNull()) {
-//        qDebug() << "parse error";
-//    }
-//    if (!doc.isArray()) {
-//        qDebug() << "json doc not array";
-//    }
     QJsonArray docArray = doc.array();
 
     //Loop through allUsers and recreate users as JsonObjects in the array
@@ -66,53 +60,23 @@ QJsonObject parser::retrieveUserProfile(QString userName, QString password) {
     //Iterate throught the JSonArray, looking for the userName and password
     for (int i = 0; i < allUsers->size(); i++) {
         temp = allUsers->at(i).toObject();
-//        qDebug() << temp.value("FirstName");
-//        qDebug() << userName << " " << password;
-
         if (temp.value("UserName") == userName && temp.value("Password") == password) {
-            //When the user is found, return it as a JsonObject
-            //allUsers->at(i).toObject();
-//            QJsonObject tmp = temp;
-//            qDebug() << "Inside loop";
-//            tmp.insert("UserName", userName);
-//            tmp.insert("Password", password);
-//            tmp.insert("FirstName", temp.value("FirstName").toString());
-//            tmp.insert("LastName", temp.value("LirstName").toString());
-//            tmp.insert("Birthday", temp.value("Birthday").toString());
-//            tmp.insert("lastGame", 0);
-//            tmp.insert("2GamesAgo", 0);
-//            tmp.insert("3GamesAgo", 0);
-//            tmp.insert("BestGame", 0);
             return temp;
-
-//            qDebug() << "\t TEST: " << user.value("FirstName");
-
-
        }
-
-
-
     }
-
     return temp;
-
-    //If the user does not exist at this point, qDebug() << an exception
     qDebug() << "error retrieving user information";
 }
 
 bool parser::userPasswordMatches(QString userName, QString password) {
     for (int i = 0; i < allUsers->size(); i++) {
-
         //Iterate through the users
         QJsonObject temp = allUsers->at(i).toObject();
-        qInfo() << "Temp: " << temp.value("UserName");
         if (temp.value("UserName") == userName && temp.value("Password") == password) {
-
             //If any users are a match, return true
             return true;
         }
     }
-
     //If no users are a match, return false
     return false;
 }
@@ -120,17 +84,13 @@ bool parser::userPasswordMatches(QString userName, QString password) {
 //USED AS A CHECK FOR SIGNING IN && SIGNING UP
 bool parser::userExists(QString userName) {
     for (int i = 0; i < allUsers->size(); i++) {
-
         //Iterate through the users
         QJsonObject temp = allUsers->at(i).toObject();
-         qInfo() << "Temp: " << temp.value("UserName");
         if (temp.value("UserName") == userName) {
-
             //If any users are a match, return true
             return true;
         }
     }
-
     //If no users are a match, return false
     return false;
 }
@@ -138,37 +98,28 @@ bool parser::userExists(QString userName) {
 //USED AT THE END OF EACH GAME TO UPDATE THE SCORES OF THE USER
 void parser::updateUserScores(QString userName, int score) {
     for (int i = 0; i < allUsers->size(); i++) {
-
         //Iterate through the users
         QJsonObject temp = allUsers->at(i).toObject();
         if (temp.value("UserName") == userName) {
-
             //When the user is found remove it from the array
             allUsers->removeAt(i);
-
             //Update best score
             if (score > temp.value("BestGame").toInt()) {
                 temp.remove("BestGame");
                 temp.insert("BestGame", score);
             }
-
             QJsonValue lastGame = temp.value("lastGame");
             QJsonValue twoGamesAgo = temp.value("2GamesAgo");
-
             //Remove the previous score values
             temp.remove("lastGame");
             temp.remove("2GamesAgo");
             temp.remove("3GamesAgo");
-
             //Move each score down a recency and place the newest score in the 'lastGame' position
             temp.insert("3GamesAgo", twoGamesAgo);
             temp.insert("2GamesAgo", lastGame);
             temp.insert("lastGame", score);
-
             //Place the user back into the array
             allUsers->insert(i, temp);
-
-
         }
     }
 }
@@ -178,16 +129,13 @@ void parser::updateUserScores(QString userName, int score) {
 void parser::storeIntoFile() {
     //Generate the document and file
     QJsonDocument doc(*allUsers);
-    QFile file("/Users/lauryn.c.hansen/MSD/CodeCrusaderQtGame/users.json");
-
+    QFile file("/Users/levineely/CodeCrusaderQtGame/users.json");
     //Write the Json user objects to the file
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "Inside storeIntoFile if statement";
         file.write(doc.toJson());
         file.close();
     }
     else {
-        //If something goes wrong, qDebug() << an error
         qDebug() << "error writing to file";
         qDebug() << "Error code:" << file.error();
         qDebug() << "Error description:" << file.errorString();
